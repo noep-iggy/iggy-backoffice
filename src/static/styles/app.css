@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* FONTS */
+@import url('../../../public/fonts/Inter/stylesheet.css');
+@import url('../../../public/fonts/OpenSans/stylesheet.css');
+@import url('../../../public/fonts/Monda/stylesheet.css');
+
+html,
+body {
+  /* overscroll-behavior: none; */
+  padding: 0;
+  margin: 0;
+}
+
+.kIQkHS {
+  min-width: 100% !important;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.scrollbar-white::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.scrollbar-white::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 5em;
+}

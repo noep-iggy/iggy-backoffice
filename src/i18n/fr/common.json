@@ -1,0 +1,103 @@
+{
+  "langage": "fr",
+  "generics": {
+    "copyright": "Copyright © 2023 - Starter-template - Tous droits réservés",
+    "designed": "Conçu et développé par ",
+    "logout": "Déconnexion",
+    "register": "Créer un compte",
+    "login": "Se connecter",
+    "next": "Suivant",
+    "back": "Retour",
+    "step": "Étape",
+    "update": "Mettre à jour",
+    "cancel": "Annuler",
+    "add": "Ajouter"
+  },
+  "home": {
+    "name": "home",
+    "subTitle": "C'est la page d'accueil",
+    "title": "Bienvenu sur le starter-template ! 👋",
+    "link": "A propos"
+  },
+  "dynamicPage":{
+    "name": "dynamicPage",
+    "subTitle": "C'est une page dynamique",
+    "title": "Page dynamique"
+  },
+  "user": {
+    "detail": {
+      "general": "Informations générales"
+    }
+  },
+  "fields": {
+    "generics": {
+      "addData": "Ajouter une valeur"
+    },
+    "userName": {
+      "label": "Nom d'utilisateur",
+      "placeholder": "Entrez votre nom d'utilisateur",
+      "errors": {
+        "required": "Le nom d'utilisateur est requis",
+        "notString": "Le nom d'utilisateur doit être une chaîne de caractères"
+      }
+    },
+    "confirmPassword": {
+      "label": "Confirmer le mot de passe",
+      "placeholder": "Confirmez votre mot de passe",
+      "errors": {
+        "notMatch": "Les mots de passe ne sont pas identiques"
+      }
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "Entrez votre email",
+      "errors": {
+        "required": "L'email est requis",
+        "notString": "L'email doit être une chaîne de caractères",
+        "notValid": "L'email n'est pas valide"
+      }
+    },
+    "password": {
+      "label": "Mot de passe",
+      "placeholder": "Entrez votre mot de passe",
+      "errors": {
+        "required": "Le mot de passe est requis",
+        "notString": "Le mot de passe doit être une chaîne de caractères",
+        "tooShort": "Le mot de passe doit contenir au moins 8 caractères",
+        "noLetter": "Le mot de passe doit contenir au moins une lettre",
+        "noDigit": "Le mot de passe doit contenir au moins un chiffre",
+        "noSpecialCharacter": "Le mot de passe doit contenir au moins un caractère spécial",
+        "hasSpaces": "Le mot de passe ne doit pas contenir d'espaces",
+        "noUppercase": "Le mot de passe doit contenir au moins une majuscule"
+      }
+    },
+    "profilePicture": {
+      "placeholder": "Choisissez une photo"
+    }
+  },
+  "errors": {
+    "generics": {
+      "internalServerError": "Erreur interne du serveur"
+    },
+    "api": {
+      "validation": {
+        "single": "Erreur sur le champ : {{field}}",
+        "multiple": "Erreurs sur les champs suivants : {{fields}}"
+      },
+      "user": {
+        "notFound": "Utilisateur non trouvé",
+        "exist": "L'utilisateur existe déjà",
+        "notFoundOrWrongPassword": "Utilisateur non trouvé ou mot de passe incorrect",
+        "notUpdated": "L'utilisateur n'a pas été mis à jour"
+      },
+      "admin": {
+        "notAdmin": "Vous n'êtes pas administrateur",
+        "cannotChangeOwnStatus": "Vous ne pouvez pas changer votre propre statut",
+        "userNotAdmin": "L'utilisateur n'est pas administrateur"
+      },
+      "file": {
+        "undefined": "Le fichier n'est pas trouvé"
+      }
+    }
+  }
+}
