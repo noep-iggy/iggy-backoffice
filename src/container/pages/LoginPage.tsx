@@ -13,7 +13,7 @@ import {
 } from '@/services/error';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AuthLoginApi } from '@/types';
-import { userValidation } from '../../../validations';
+import { userValidation } from '@/validations';
 
 export default function LoginPage(): React.JSX.Element {
   const { t } = useTranslation();
@@ -57,10 +57,10 @@ export default function LoginPage(): React.JSX.Element {
         </H4>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Input
-            label={t('fields.userName.label')}
-            placeholder={t('fields.userName.placeholder')}
-            register={register('userName')}
-            error={errors.userName?.message}
+            label={t('fields.email.label')}
+            placeholder={t('fields.email.placeholder')}
+            register={register('email')}
+            error={errors.email?.message}
           />
           <InputPassword
             label={t('fields.password.label')}
@@ -78,7 +78,7 @@ export default function LoginPage(): React.JSX.Element {
           )}
         </Form>
       </CardStyled>
-      <Background src='/images/header.jpg' alt='header' />
+      <Background src='/images/splash.png' alt='header' />
     </Main>
   );
 }

@@ -12,9 +12,9 @@ import tw from 'tailwind-styled-components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import router from 'next/router';
 import { UpdateUserApi } from '@/types';
-import { userValidation } from '../../../../validations';
 import { ROUTES } from '@/routing';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
+import { userValidation } from '@/validations';
 
 export function UserDetailPage(): React.JSX.Element {
   const { t } = useTranslation();
@@ -70,13 +70,22 @@ export function UserDetailPage(): React.JSX.Element {
             error={errors.email?.message}
           />
           <InputEdit
-            value={getValues('userName')}
-            defaultValue={currentUser?.userName}
-            label={t('fields.userName.label')}
-            placeholder={t('fields.userName.placeholder')}
+            value={getValues('firstName')}
+            defaultValue={currentUser?.firstName}
+            label={t('fields.firstName.label')}
+            placeholder={t('fields.firstName.placeholder')}
             onHandleSubmit={handleSubmit(onSubmit)}
-            error={errors.userName?.message}
-            register={register('userName')}
+            error={errors.firstName?.message}
+            register={register('firstName')}
+          />
+          <InputEdit
+            value={getValues('lastName')}
+            defaultValue={currentUser?.lastName}
+            label={t('fields.lastName.label')}
+            placeholder={t('fields.lastName.placeholder')}
+            onHandleSubmit={handleSubmit(onSubmit)}
+            error={errors.lastName?.message}
+            register={register('lastName')}
           />
           {errorApi && (
             <ErrorMessage className='mt-0.5 w-full' icon>

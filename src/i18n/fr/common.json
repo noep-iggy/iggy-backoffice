@@ -33,19 +33,20 @@
     "generics": {
       "addData": "Ajouter une valeur"
     },
-    "userName": {
-      "label": "Nom d'utilisateur",
-      "placeholder": "Entrez votre nom d'utilisateur",
+     "firstName": {
+      "label": "Prénom",
+      "placeholder": "Entrez votre prénom",
       "errors": {
-        "required": "Le nom d'utilisateur est requis",
-        "notString": "Le nom d'utilisateur doit être une chaîne de caractères"
+        "required": "Le prénom est requis",
+        "notString": "Le prénom doit être une chaîne de caractères"
       }
     },
-    "confirmPassword": {
-      "label": "Confirmer le mot de passe",
-      "placeholder": "Confirmez votre mot de passe",
+    "lastName": {
+      "label": "Nom",
+      "placeholder": "Entrez votre nom",
       "errors": {
-        "notMatch": "Les mots de passe ne sont pas identiques"
+        "required": "Le nom est requis",
+        "notString": "Le nom doit être une chaîne de caractères"
       }
     },
     "email": {

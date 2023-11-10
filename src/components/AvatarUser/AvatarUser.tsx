@@ -23,7 +23,7 @@ export function AvatarUser(props: AvatarUserProps): React.ReactElement {
       className={className}
       $size={avatarProps.size ?? 'm'}
     >
-      {user.userName[0]}
+      {user.firstName[0]}
     </Main>
   );
 }

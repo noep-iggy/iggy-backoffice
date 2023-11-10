@@ -1,4 +1,4 @@
-import { AvatarUser, Col, P14 } from '@/components';
+import { AvatarUser, Col, P12, P14, Row } from '@/components';
 import { useAuthContext } from '@/contexts';
 import { ROUTES } from '@/routing';
 import { HomeIcon, TagIcon } from '@heroicons/react/24/outline';
@@ -20,7 +20,7 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
 
   return (
     <Main className={className}>
-      <Logo src="logo.svg" onClick={() => router.push(ROUTES.home)} />
+      <Logo src="logo.png" onClick={() => router.push(ROUTES.home)} />
       <Separator />
       <Content>
         <Navigation $selected={ROUTES.home === selected}  onClick={() => router.push(ROUTES.home)}>
@@ -40,7 +40,11 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
       <UserContainer $selected={ROUTES.user.detail === selected} onClick={()=> router.push(ROUTES.user.detail)}>
         <AvatarUser user={currentUser} />
         <Col className='ml-2'>
-          <P14>{currentUser?.userName}</P14>
+          <P12>{currentUser?.email}</P12>
+          <Row className=''>
+            <P12>{currentUser?.firstName}</P12>
+            <P12 className='ml-1'>{currentUser?.lastName}</P12>
+          </Row>
         </Col>
       </UserContainer>
     </Main>
@@ -54,7 +58,7 @@ const Main = tw.div`
   left-[1rem]
   flex
   flex-col
-  items-start
+  items-center
   justify-center
   pt-5
   bg-gray-50
@@ -90,8 +94,9 @@ const UserContainer = tw.div<{ $selected: boolean }>`
 `;
 
 const Logo = tw.img`
-  w-10
-  h-10
+  w-40
+  h-8
+  object-cover
   cursor-pointer
   mb-4
 `;
