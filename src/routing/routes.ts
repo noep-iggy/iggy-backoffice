@@ -1,6 +1,9 @@
 export const ROUTES = {
   home: '/',
-  dynamicPage: '/dynamicPage',
+  houses: {
+    list: '/houses',
+    detail: (houseId: string) => `/houses/${houseId}`,
+  },
   user: {
     detail: '/user/detail',
   },

@@ -1,5 +1,5 @@
 import { AuthWall, SeoHead } from '@/container/components';
-import { DynamicPages } from '@/container/pages';
+import { ListHousesPage } from '@/container/pages/Houses';
 import { PageBaseProps } from '@/types';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
@@ -7,7 +7,7 @@ export default function index(): React.JSX.Element {
   return (
     <AuthWall>
       <SeoHead />
-      <DynamicPages />
+      <ListHousesPage />
     </AuthWall>
   );
 }

@@ -1,6 +1,5 @@
 import { ButtonPrimary, Col, ErrorMessage, H3, InputEdit, InputImageEdit, Layout, P14 } from '@/components';
 import { useAuthContext } from '@/contexts';
-import { ApiService } from '@/services/apiService';
 import {
   formatApiErrorMessage,
   formatValidationErrorMessage,
@@ -15,6 +14,7 @@ import { UpdateUserApi } from '@/types';
 import { ROUTES } from '@/routing';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { userValidation } from '@/validations';
+import { ApiService } from '@/services/api';
 
 export function UserDetailPage(): React.JSX.Element {
   const { t } = useTranslation();
@@ -50,7 +50,7 @@ export function UserDetailPage(): React.JSX.Element {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <H3>{t('user.detail.general')}</H3>
           <InputImageEdit
-            label='Profile picture'
+            label={t('fields.profilePicture.label')}
             value={currentUser?.profilePicture}
             onHandleSubmit={handleSubmit(onSubmit)}
             error={errors.profilePicture?.message}

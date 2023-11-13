@@ -31,10 +31,11 @@ export function Input(props: InputProps): React.JSX.Element {
     inputContainerClassName,
     error,
     register,
+    className,
   } = props;
   const { t } = useTranslation();
   return (
-    <MainContainer>
+    <MainContainer className={className}>
       {props.label && <LabelStyled>{props.label}</LabelStyled>}
       <InputContainer
         $disabled={disabled}

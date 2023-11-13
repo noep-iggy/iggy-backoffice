@@ -2,16 +2,15 @@ import { Layout, P18 } from '@/components';
 import { ROUTES } from '@/routing';
 import tw from 'tailwind-styled-components';
 
-interface DetailPageProps {
+interface DetailHousePageProps {
   idPage: string;
-  className?: string;
 }
 
-export function DetailPage(props: DetailPageProps): React.JSX.Element {
-  const { idPage, className } = props;
+export function DetailHousePage(props: DetailHousePageProps): React.JSX.Element {
+  const { idPage } = props;
 
   return (
-    <Layout selected={ROUTES.dynamicPage} className={className}>
+    <Layout selected={ROUTES.houses.list}>
       <Main>
         <P18>{`Ceci est la page d'id : ${idPage}`}</P18>
       </Main>

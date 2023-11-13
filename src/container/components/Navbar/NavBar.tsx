@@ -1,7 +1,7 @@
 import { AvatarUser, Col, P12, P14, Row } from '@/components';
 import { useAuthContext } from '@/contexts';
 import { ROUTES } from '@/routing';
-import { HomeIcon, TagIcon } from '@heroicons/react/24/outline';
+import { HomeIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/dist/client/router';
 import React from 'react';
@@ -23,17 +23,11 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
       <Logo src="logo.png" onClick={() => router.push(ROUTES.home)} />
       <Separator />
       <Content>
-        <Navigation $selected={ROUTES.home === selected}  onClick={() => router.push(ROUTES.home)}>
-          <LogoNavigation $selected={ROUTES.home === selected}>
+        <Navigation $selected={ROUTES.houses.list === selected}  onClick={() => router.push(ROUTES.houses.list)}>
+          <LogoNavigation $selected={ROUTES.houses.list === selected}>
             <HomeIcon />
           </LogoNavigation>
-          <P14>{t('home.name')}</P14>
-        </Navigation>
-        <Navigation $selected={ROUTES.dynamicPage === selected}  onClick={() => router.push(ROUTES.dynamicPage)}>
-          <LogoNavigation $selected={ROUTES.dynamicPage === selected}>
-            <TagIcon />
-          </LogoNavigation>
-          <P14>{t('dynamicPage.title')}</P14>
+          <P14>{t('houses.list.name')}</P14>
         </Navigation>
       </Content>
       <Separator />
@@ -119,12 +113,10 @@ const Navigation = tw.div<{ $selected: boolean }>`
   rounded-md
   transition
   duration-300
-  hover:bg-gray-200
-  ${(props : { $selected: boolean }) => (props.$selected ? 'bg-gray-200 shadow-sm' : 'opacity-50')}
+  ${(props : { $selected: boolean }) => (props.$selected ? 'bg-primary shadow-sm text-white' : 'hover:bg-primary-200')}
 `;
 
 const LogoNavigation = tw.div<{ $selected: boolean }>`
-  ${(props : { $selected: boolean }) => (props.$selected ? 'opacity-100 shadow-sm' : 'opacity-50')}
   w-6
   h-6
   mr-2

@@ -7,7 +7,7 @@ import { ErrorMessage } from '../ErrorMessage';
 import { P12 } from '../Texts';
 import { LabelStyled } from './InputCommon';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { ApiService } from '@/services/apiService';
+import { ApiService } from '@/services/api/userService';
 import { formatApiErrorMessage } from '@/services/error';
 import { UseFormRegisterReturn } from 'react-hook-form';
 

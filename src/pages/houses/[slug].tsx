@@ -1,21 +1,21 @@
 import { AuthWall, SeoHead } from '@/container/components';
-import { DetailPage } from '@/container/pages';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { FullPageLoader } from '../../components';
 import { PageBaseProps, GetStaticPath } from '@/types';
+import { DetailHousePage } from '@/container/pages/Houses';
 
-type DynamicPageExempleProps = {
+type HousePageProps = {
   idPage: string;
 };
 
-export default function DynamicPageExemple(
-  props: DynamicPageExempleProps
+export default function HousePage(
+  props: HousePageProps
 ): React.JSX.Element {
   const { idPage } = props;
   return (
     <AuthWall>
       <SeoHead />
-      {idPage ? <DetailPage idPage={idPage} /> : <FullPageLoader />}
+      {idPage ? <DetailHousePage idPage={idPage} /> : <FullPageLoader />}
     </AuthWall>
   );
 }

@@ -1,8 +1,8 @@
-import { ApiService } from '@/services/apiService';
 import { HttpService } from '@/services/httpService';
 import React, { useEffect, useState } from 'react';
 import { Loader } from '../components';
 import { UserDto } from '@/types';
+import { ApiService } from '@/services/api';
 
 interface State {
   currentUser: UserDto | null;

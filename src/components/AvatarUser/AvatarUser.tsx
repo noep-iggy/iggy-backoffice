@@ -24,6 +24,7 @@ export function AvatarUser(props: AvatarUserProps): React.ReactElement {
       $size={avatarProps.size ?? 'm'}
     >
       {user.firstName[0]}
+      {user.lastName && user.lastName[0]}
     </Main>
   );
 }
@@ -39,6 +40,7 @@ const Main = tw.div<MainStyleProps>`
   justify-center
   bg-primary-600
   text-white
+  uppercase
   
   ${({ $size }: MainStyleProps) => {
     if ($size === 'l')

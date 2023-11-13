@@ -3,15 +3,23 @@ export const API_ROUTES = {
     login: '/auth/login',
   },
   users: {
-    me: '/user',
-    update: '/user',
-    delete: '/user',
+    me: '/users/me',
+    updateMe: '/users/me',
+    deleteMe: '/users/me',
+    getAll: '/admin/users',
+    getOne: (userId: string) => `admin/users/${userId}`,
+    updateOne: (userId: string) => `admin/users/${userId}`,
+    deleteOne: (userId: string) => `admin/users/${userId}`,
+  },
+  houses: {
+    getAll: '/admin/houses',
+    getOne: (houseId: string) => `/admin/houses/${houseId}`,
+    updateOne: (houseId: string) => `/admin/houses/${houseId}`,
+    deleteOne: (houseId: string) => `/admin/houses/${houseId}`,
   },
   admin: {
-    users: {
-      createDefaultAdmin: '/admin/create-default-admin',
-      toggleAdminStatus: (userId: string) =>
-        `/admin/users/${userId}/toggle-admin-status`,
-    },
+    createDefaultAdmin: '/admin/create-default-admin',
+    toggleAdminStatus: (userId: string) =>
+      `/admin/users/${userId}/toggle-admin-status`,
   },
 };

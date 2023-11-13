@@ -6,7 +6,6 @@ import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { useForm } from 'react-hook-form';
-import { ApiService } from '@/services/apiService';
 import {
   formatApiErrorMessage,
   formatValidationErrorMessage,
@@ -14,6 +13,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AuthLoginApi } from '@/types';
 import { userValidation } from '@/validations';
+import { ApiService } from '@/services/api';
 
 export default function LoginPage(): React.JSX.Element {
   const { t } = useTranslation();

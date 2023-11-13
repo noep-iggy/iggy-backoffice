@@ -46,7 +46,6 @@ const Page = tw.div`
   z-0
   min-h-screen
   w-full
-  mt-5 md:mt-10
+  mt-5
   mb-5 md:mb-20
-  px-5 md:px-10
 `;
