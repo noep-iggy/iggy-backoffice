@@ -1,14 +1,13 @@
 import { AuthWall, SeoHead } from '@/container/components';
-import { UserDetailPage } from '@/container/pages';
+import { ListAnimalsPage } from '@/container/pages/Animals';
 import { PageBaseProps } from '@/types';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import React from 'react';
 
 export default function index(): React.JSX.Element {
   return (
     <AuthWall>
       <SeoHead />
-      <UserDetailPage />
+      <ListAnimalsPage />
     </AuthWall>
   );
 }

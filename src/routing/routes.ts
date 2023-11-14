@@ -12,9 +12,6 @@ export const ROUTES = {
     list: '/animals',
     detail: (animalId: string) => `/animals/${animalId}`,
   },
-  user: {
-    detail: '/user/detail',
-  },
   auth: {
     login: '/login',
   },

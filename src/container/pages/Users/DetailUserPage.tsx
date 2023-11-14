@@ -21,6 +21,7 @@ import router from 'next/router';
 import { ArrowLeftIcon, MinusCircleIcon, PlusCircleIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { BackDetailPage, ButtonDeleteDetailPage, DeleteModal, DetailPage, FormDetailPage, InfosDetailPage, LabelRowInfosDetailPage, RowInfosDetailPage, TitleDetailPage, ValueRowInfosDetailPage } from '@/container/components';
 import { formatDate } from '@/services/utils';
+import { useAuthContext } from '@/contexts';
 
 interface DetailUserPageProps {
   idPage: string;
@@ -33,7 +34,7 @@ export function DetailUserPage(props: DetailUserPageProps): React.JSX.Element {
   const [errorApi, setErrorApi] = useState<string>('');
   const [ isDeleteModalOpen, setIsDeleteModalOpen ] = useState<boolean>(false);
   const [ toggleAdminLoading, setToggleAdminLoading ] = useState<boolean>(false);
-
+  const { currentUser } = useAuthContext(); 
   const {
     handleSubmit,
     formState: { errors },
@@ -83,7 +84,7 @@ export function DetailUserPage(props: DetailUserPageProps): React.JSX.Element {
     }
   }
 
-  return <Layout selected={ROUTES.users.list}>
+  return <Layout selected={currentUser?.id !== router.query.slug ? ROUTES.users.list : undefined}>
     <BackDetailPage onClick={() => router.push(ROUTES.users.list)}>
       <ArrowLeftIcon className='mr-1 w-4' />
       <LabelRowInfosDetailPage>{t('generics.back')}</LabelRowInfosDetailPage>

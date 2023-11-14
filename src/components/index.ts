@@ -13,3 +13,4 @@ export * from './ProgressBar';
 export * from './AvatarUser';
 export * from './Avatar';
 export * from './InputEdit';
+export * from './Icons'

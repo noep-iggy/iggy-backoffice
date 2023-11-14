@@ -1,4 +1,4 @@
-import { AvatarUser, Col, P12, P14, Row } from '@/components';
+import { AnimalIcon, AvatarUser, Col, P12, P14, Row } from '@/components';
 import { useAuthContext } from '@/contexts';
 import { ROUTES } from '@/routing';
 import { HomeIcon, UserIcon } from '@heroicons/react/24/outline';
@@ -35,9 +35,15 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
           </LogoNavigation>
           <P14>{t('users.list.name')}</P14>
         </Navigation>
+        <Navigation $selected={ROUTES.animals.list === selected}  onClick={() => router.push(ROUTES.animals.list)}>
+          <LogoNavigation $selected={ROUTES.animals.list === selected}>
+            <AnimalIcon />
+          </LogoNavigation>
+          <P14>{t('animals.list.name')}</P14>
+        </Navigation>
       </Content>
       <Separator />
-      <UserContainer $selected={ROUTES.user.detail === selected} onClick={()=> router.push(ROUTES.user.detail)}>
+      <UserContainer $selected={router.query.slug === currentUser?.id} onClick={()=> currentUser && router.push(ROUTES.users.detail(currentUser.id))}>
         <AvatarUser user={currentUser} />
         <Col className='ml-2'>
           <P12>{currentUser?.email}</P12>
@@ -122,7 +128,7 @@ const Navigation = tw.div<{ $selected: boolean }>`
 `;
 
 const LogoNavigation = tw.div<{ $selected: boolean }>`
-  w-6
-  h-6
+  w-5
+  h-5
   mr-2
 `;

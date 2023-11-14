@@ -125,7 +125,6 @@ export function DetailHousePage(props: DetailHousePageProps): React.JSX.Element 
                           {index !== house.animals.length - 1 && ', '}
                         </span>
                     )
-                    .join(', ')  
                   : 
                   t('generics.empty')
                 }

@@ -19,6 +19,12 @@ export const API_ROUTES = {
     updateOne: (houseId: string) => `/admin/houses/${houseId}`,
     deleteOne: (houseId: string) => `/admin/houses/${houseId}`,
   },
+  animals: {
+    getAll: '/admin/animals',
+    getOne: (animalId: string) => `/admin/animals/${animalId}`,
+    updateOne: (animalId: string) => `/admin/animals/${animalId}`,
+    deleteOne: (animalId: string) => `/admin/animals/${animalId}`,
+  },
   admin: {
     createDefaultAdmin: '/admin/create-default-admin',
     toggleAdminStatus: (userId: string) =>
