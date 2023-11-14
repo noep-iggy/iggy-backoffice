@@ -2,21 +2,21 @@ import { AuthWall, SeoHead } from '@/container/components';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { FullPageLoader } from '../../components';
 import { PageBaseProps, GetStaticPath } from '@/types';
-import { DetailHousePage } from '@/container/pages/Houses';
+import { DetailUserPage } from '@/container/pages';
 import { ROUTES } from '@/routing';
 
-type HousePageProps = {
+type UserPageProps = {
   idPage: string;
 };
 
-export default function HousePage(
-  props: HousePageProps
+export default function UserPage(
+  props: UserPageProps
 ): React.JSX.Element {
   const { idPage } = props;
   return (
     <AuthWall>
       <SeoHead />
-      {idPage ? <DetailHousePage idPage={idPage} /> : <FullPageLoader selected={ROUTES.houses.list}/>}
+      {idPage ? <DetailUserPage idPage={idPage} /> : <FullPageLoader selected={ROUTES.users.list} />}
     </AuthWall>
   );
 }

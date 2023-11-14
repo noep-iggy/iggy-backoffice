@@ -90,7 +90,6 @@ const Button = tw.button<ButtonStyleProps>`
   tracking-wide
 
   relative
-  border-none
   transition
   w-fit
   gap-2

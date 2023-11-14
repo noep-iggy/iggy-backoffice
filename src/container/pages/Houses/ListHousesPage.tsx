@@ -25,7 +25,7 @@ import tw from 'tailwind-styled-components';
 
 export function ListHousesPage(): React.JSX.Element {
   const [ houses, setHouses ] = useState<HouseDto[]>([]);
-  const [orderBy, setOrderBy] = useState<string>('name');
+  const [orderBy, setOrderBy] = useState<keyof HouseDto>('name');
   const [orderType, setOrderType] = useState<'ASC' | 'DESC'>('DESC');
   const [ search, setSearch ] = useState<string>('');
   const [page, setPage] = useState<number>(0);
@@ -52,7 +52,7 @@ export function ListHousesPage(): React.JSX.Element {
     fetchHouses();
   }, [orderBy, orderType, search, page])
 
-  function handleSortPlace(by: string) {
+  function handleSortPlace(by: keyof HouseDto) {
     if (orderBy === by) {
       setOrderType(orderType === 'ASC' ? 'DESC' : 'ASC');
     } else {
@@ -61,11 +61,13 @@ export function ListHousesPage(): React.JSX.Element {
     setOrderBy(by);
   }
 
+  const nbColumns = 'grid-cols-4';
+
   return (
     <Layout selected={ROUTES.houses.list}>
       <H2 className='mb-7'>{t('houses.list.title')}</H2>
       <Input left={<MagnifyingGlassIcon/>} className='w-50' placeholder={t('houses.list.search')} onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} />
-      <TableHeader className='grid-cols-4 mt-2'>
+      <TableHeader className={`${nbColumns} mt-2`}>
         <TableHeaderItem $isFocus={orderBy === 'name'} onClick={() => handleSortPlace('name')}>
           {t('houses.list.table.name')}
           {orderBy === 'name' && <ArrowsUpDownStyled $direction={orderType === 'ASC'} />}
@@ -86,7 +88,7 @@ export function ListHousesPage(): React.JSX.Element {
       {houses.length > 0 ?
         houses.map((house: HouseDto) => (
           <TableRow
-            className='grid-cols-4'
+            className={nbColumns}
             onMouseEnter={() => setRowTableHover(house.id)}
             onMouseLeave={() => setRowTableHover(undefined)}
             key={house.id}
@@ -113,7 +115,7 @@ export function ListHousesPage(): React.JSX.Element {
               {house.billingPlan}
             </Cellule>
           </TableRow>
-        )) : <TableRow className='grid-cols-4'>{Array(4).fill(null).map((e)=> <Cellule key={e}><Loader size={5}/></Cellule>)}</TableRow>}
+        )) : <TableRow className={nbColumns}>{Array(4).fill(null).map((e)=> <Cellule key={e}><Loader size={5}/></Cellule>)}</TableRow>}
       <RowCenter className='mt-5 justify-center w-full'>
         <Icon className='mr-2' $disabled={page < 5} onClick={() => page >= 5 && setPage(page-5)}>
           <ChevronDoubleLeftIcon />

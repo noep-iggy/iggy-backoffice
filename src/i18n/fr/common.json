@@ -13,7 +13,8 @@
     "cancel": "Annuler",
     "add": "Ajouter",
     "search": "Rechercher",
-    "delete": "Supprimer"
+    "delete": "Supprimer", 
+    "empty": "Aucune donnée"
   },
   "home": {
     "name": "home",
@@ -36,9 +37,57 @@
     "detail": {
       "name": "Maison",
       "title": "Détail de la maison",
+      "general": {
+        "title": "Informations générales",
+        "users": "Utilisateurs",
+        "animals": "Animaux",
+        "createAt": "Créé le",
+        "updateAt": "Mis à jour le"
+      },
+      "actions": "Actions",
       "delete":{
         "title": "Supprimer la maison",
-        "content": "Êtes-vous sûr de vouloir supprimer cette maison ?"
+        "content": "Êtes-vous sûr de vouloir supprimer cette maison ?",
+        "ifDelete": "Si vous supprimez cette maison, tous les utilisateurs, animaux et tâches associés seront supprimés"
+      }
+    }
+  },
+  "users":{
+    "list":{
+      "name": "Utilisateurs",
+      "title": "Liste des utilisateurs",
+      "search": "Rechercher un utilisateur",
+      "table": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "email": "Email",
+        "house": "Maison",
+        "role": "Rôle",
+        "admin": "Administrateur"
+      }
+    },
+    "detail": {
+      "name": "Utilisateur",
+      "title": "Détail de l'utilisateur",
+      "actions": "Actions",
+      "general": {
+        "title": "Informations générales",
+        "house": "Maison",
+        "admin": "Administrateur",
+        "createAt": "Créé le",
+        "updateAt": "Mis à jour le"
+      },
+      "delete":{
+        "title": "Supprimer l'utilisateur",
+        "content": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+        "ifDelete": "Si vous supprimez cet utilisateur, toutes les tâches associées seront supprimées"
+      }, 
+      "changeAdminStatus": {
+        "label": "Changer le rôle d'administrateur",
+        "add": "Ajouter",
+        "remove": "Retirer",
+        "ifAdd": "Si vous ajoutez le rôle d'administrateur à cet utilisateur, il pourra gérer toute l'application",
+        "ifRemove": "Si vous retirez le rôle d'administrateur à cet utilisateur, il ne pourra plus gérer l'application"
       }
     }
   },
@@ -74,6 +123,14 @@
         "required": "L'email est requis",
         "notString": "L'email doit être une chaîne de caractères",
         "notValid": "L'email n'est pas valide"
+      }
+    },
+    "role":{
+      "label": "Rôle",
+      "placeholder": "Choisissez un rôle",
+      "errors": {
+        "required": "Le rôle est requis",
+        "notString": "Le rôle doit être une chaîne de caractères"
       }
     },
     "name": {

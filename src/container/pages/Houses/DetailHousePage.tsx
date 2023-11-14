@@ -1,15 +1,4 @@
-import {
-  ButtonAlert,
-  Col,
-  ErrorMessage,
-  H2,
-  InputEdit,
-  InputEnumEdit,
-  Layout,
-  P14,
-  PageLoader,
-  Row,
-} from '@/components';
+import { Col, ErrorMessage, InputEdit, InputEnumEdit, Layout, P14, PageLoader } from '@/components';
 import { ROUTES } from '@/routing';
 import { ApiService } from '@/services/api';
 import { BillingPlanTypeEnum, HouseDto, UpdateHouseApi } from '@/types';
@@ -18,11 +7,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import tw from 'tailwind-styled-components';
 import { formatApiErrorMessage, formatValidationErrorMessage } from '@/services/error';
 import router from 'next/router';
-import { ArrowLeftIcon } from '@heroicons/react/24/solid';
-import { DeleteModal } from '@/container/components';
+import { ArrowLeftIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { BackDetailPage, ButtonDeleteDetailPage, DeleteModal, DetailPage, FormDetailPage, InfosDetailPage, LabelRowInfosDetailPage, RowInfosDetailPage, TitleDetailPage, ValueRowInfosDetailPage } from '@/container/components';
+import { formatDate } from '@/services/utils';
 interface DetailHousePageProps {
   idPage: string;
 }
@@ -72,15 +61,15 @@ export function DetailHousePage(props: DetailHousePageProps): React.JSX.Element 
   }
 
   return <Layout selected={ROUTES.houses.list}>
-    <Back onClick={() => router.push(ROUTES.houses.list)}>
+    <BackDetailPage onClick={() => router.push(ROUTES.houses.list)}>
       <ArrowLeftIcon className='mr-1 w-4' />
       <P14 className='font-semibold'>{t('generics.back')}</P14>
-    </Back>
-    <Main>
-      <H2>{t('houses.detail.title')}</H2>
+    </BackDetailPage>
+    <DetailPage>
+      <TitleDetailPage className='mt-5'>{t('houses.detail.title')}</TitleDetailPage>
       {house ? (
         <>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <FormDetailPage onSubmit={handleSubmit(onSubmit)}>
             <InputEdit
               value={getValues('name')}
               label={t('fields.name.label')}
@@ -109,13 +98,84 @@ export function DetailHousePage(props: DetailHousePageProps): React.JSX.Element 
                 {errorApi}
               </ErrorMessage>
             )}
-          </Form>
-          <ButtonAlert className='mt-10' onClick={()=> setIsDeleteModalOpen(true)}>
-            {t('houses.detail.delete.title')}
-          </ButtonAlert>
+          </FormDetailPage>
+          <TitleDetailPage>{t('houses.detail.general.title')}</TitleDetailPage>
+          <InfosDetailPage>
+            <RowInfosDetailPage>
+              <LabelRowInfosDetailPage>{t('houses.detail.general.createAt')}</LabelRowInfosDetailPage>
+              <ValueRowInfosDetailPage>{formatDate(house.createdAt)}</ValueRowInfosDetailPage>
+            </RowInfosDetailPage>
+            <RowInfosDetailPage>
+              <LabelRowInfosDetailPage>{t('houses.detail.general.updateAt')}</LabelRowInfosDetailPage>
+              <ValueRowInfosDetailPage>{formatDate(house.updatedAt)}</ValueRowInfosDetailPage>
+            </RowInfosDetailPage>
+            <RowInfosDetailPage>
+              <LabelRowInfosDetailPage>{t('houses.detail.general.animals')}</LabelRowInfosDetailPage>
+              <ValueRowInfosDetailPage>
+                {house.animals 
+                  ? house.animals
+                    .map(
+                      (animal, index) => 
+                        <span 
+                          className='underline cursor-pointer' 
+                          onClick={()=> router.push(ROUTES.animals.detail(animal.id))} 
+                          key={animal.id}
+                        >
+                          {animal.name}
+                          {index !== house.animals.length - 1 && ', '}
+                        </span>
+                    )
+                    .join(', ')  
+                  : 
+                  t('generics.empty')
+                }
+              </ValueRowInfosDetailPage>
+            </RowInfosDetailPage>
+            <RowInfosDetailPage>
+              <LabelRowInfosDetailPage>{t('houses.detail.general.users')}</LabelRowInfosDetailPage>
+              <ValueRowInfosDetailPage>
+                {house.users 
+                  ? house.users
+                    .map(
+                      (user, index) => {
+                        return <span 
+                          className='underline cursor-pointer' 
+                          onClick={()=> router.push(ROUTES.users.detail(user.id))} 
+                          key={user.id}
+                        >
+                          {user.firstName}
+                          {index !== house.users.length - 1 && ', '}
+                        </span>
+                      })
+                  : 
+                  t('generics.empty')
+                }
+              </ValueRowInfosDetailPage>
+            </RowInfosDetailPage>
+          </InfosDetailPage>
+          <TitleDetailPage>{t('houses.detail.actions')}</TitleDetailPage>
+          <InfosDetailPage className='border-red-300'>
+            <RowInfosDetailPage>
+              <Col className='w-1/2'>
+                <LabelRowInfosDetailPage>
+                  {t('houses.detail.delete.title')}
+                </LabelRowInfosDetailPage>
+                <ValueRowInfosDetailPage className='mt-1'>
+                  {t('houses.detail.delete.ifDelete')}
+                </ValueRowInfosDetailPage>
+              </Col>
+              <ButtonDeleteDetailPage 
+                outlined 
+                leftIcon={<TrashIcon/>} 
+                onClick={()=> setIsDeleteModalOpen(true)}
+              >
+                {t('generics.delete')}
+              </ButtonDeleteDetailPage>
+            </RowInfosDetailPage>
+          </InfosDetailPage>
         </>
       ): (<PageLoader/>)}
-    </Main>
+    </DetailPage>
     <DeleteModal
       isOpen={isDeleteModalOpen}
       onClose={() => setIsDeleteModalOpen(false)}
@@ -130,23 +190,3 @@ export function DetailHousePage(props: DetailHousePageProps): React.JSX.Element 
   </Layout>
  
 }
-
-const Main = tw(Col)`
-  w-full
-  h-full
-  mt-5
-  ml-4
-`;
-
-const Form = tw.form` 
-  flex
-  flex-col
-  items-start
-  w-2/3
-  gap-5
-  mt-5
-`;
-
-const Back = tw(Row)`
-  cursor-pointer
-`

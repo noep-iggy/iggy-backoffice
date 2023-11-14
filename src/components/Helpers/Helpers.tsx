@@ -1,4 +1,4 @@
-import { PencilIcon, ArrowDownIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, ArrowDownIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import tw from 'tailwind-styled-components';
 import { P18 } from '../Texts';
 
@@ -58,6 +58,9 @@ export const RowBetween = tw(Row)`
 
 // TABLE 
 
+export function renderBoolean(value: boolean) {
+  return value ? <CheckIconStyled /> : <XMarkIconStyled />
+}
 
 export const Table = tw.div`
   grid
@@ -125,4 +128,16 @@ export const ArrowsUpDownStyled = tw(ArrowDownIcon) <{ $direction?: boolean }>`
     `
     rotate-180
   `}
+`;
+
+export const CheckIconStyled = tw(CheckIcon)`
+  h-5
+  w-5
+  text-green-500
+`;
+
+export const XMarkIconStyled = tw(XMarkIcon)`
+  h-5
+  w-5
+  text-red-500
 `;

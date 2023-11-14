@@ -10,6 +10,8 @@ export const API_ROUTES = {
     getOne: (userId: string) => `admin/users/${userId}`,
     updateOne: (userId: string) => `admin/users/${userId}`,
     deleteOne: (userId: string) => `admin/users/${userId}`,
+    toggleAdminStatus: (userId: string) =>
+      `/admin/users/${userId}/toggle-admin-status`,
   },
   houses: {
     getAll: '/admin/houses',

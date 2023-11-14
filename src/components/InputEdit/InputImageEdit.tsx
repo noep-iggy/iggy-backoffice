@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { InputCommonEdit, P2Edit } from './InputCommonEdit';
 import { InputImage, InputImageProps } from '../Inputs';
-import { MediaDto } from '@web-template/types';
+import { MediaDto } from '@/types';
 
 interface InputImageEditProps extends InputImageProps {
   onHandleSubmit: (e: React.MouseEvent) => void;

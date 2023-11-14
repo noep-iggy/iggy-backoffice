@@ -44,7 +44,6 @@ const Page = tw.div`
   items-start
   justify-start
   z-0
-  min-h-screen
   w-full
   mt-5
   mb-5 md:mb-20

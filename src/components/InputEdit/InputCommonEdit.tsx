@@ -59,9 +59,12 @@ const Main = tw.div`
   items-start
   justify-center
   w-full
-  border-b
-  pb-2
   relative
+  py-3
+  first:pt-0
+  last:pb-0
+  border-t
+  first:border-none
 `;
 
 const Label = tw(LabelStyled)`

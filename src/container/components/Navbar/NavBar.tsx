@@ -1,7 +1,7 @@
 import { AvatarUser, Col, P12, P14, Row } from '@/components';
 import { useAuthContext } from '@/contexts';
 import { ROUTES } from '@/routing';
-import { HomeIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, UserIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/dist/client/router';
 import React from 'react';
@@ -28,6 +28,12 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
             <HomeIcon />
           </LogoNavigation>
           <P14>{t('houses.list.name')}</P14>
+        </Navigation>
+        <Navigation $selected={ROUTES.users.list === selected}  onClick={() => router.push(ROUTES.users.list)}>
+          <LogoNavigation $selected={ROUTES.users.list === selected}>
+            <UserIcon />
+          </LogoNavigation>
+          <P14>{t('users.list.name')}</P14>
         </Navigation>
       </Content>
       <Separator />

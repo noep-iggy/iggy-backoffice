@@ -1,7 +1,7 @@
 
 import { HttpService } from '../httpService';
 import { API_ROUTES } from '../apiRoutes';
-import { UpdateUserApi, UserDto } from '@/types';
+import { SearchParams, UpdateUserApi, UserDto } from '@/types';
 
 
 const me = async (): Promise<UserDto> => {
@@ -16,8 +16,10 @@ const deleteMe = async (): Promise<void> => {
   await HttpService.delete(API_ROUTES.users.deleteMe);
 };
 
-const getAll = async (): Promise<UserDto[]> => {
-  return (await HttpService.get(API_ROUTES.users.getAll)).data;
+const getAll = async (
+  params: SearchParams,
+): Promise<UserDto[]> => {
+  return (await HttpService.get(API_ROUTES.users.getAll, { params })).data;
 }
 
 const getOne = async (userId: string): Promise<UserDto> => {
@@ -32,6 +34,10 @@ const deleteOne = async (userId: string): Promise<void> => {
   await HttpService.delete(API_ROUTES.users.deleteOne(userId));
 }
 
+const toggleAdminStatus = async (userId: string): Promise<void> => {
+  await HttpService.get(API_ROUTES.users.toggleAdminStatus(userId));
+}
+
 export const UserApiService = {
   me,
   updateMe,
@@ -40,4 +46,5 @@ export const UserApiService = {
   getOne,
   updateOne,
   deleteOne,
+  toggleAdminStatus,
 };
