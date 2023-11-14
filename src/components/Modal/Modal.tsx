@@ -1,14 +1,18 @@
 import React, { ReactNode } from 'react';
 import ReactModal from 'react-modal';
 import tw from 'tailwind-styled-components';
+import { P14 } from '../Texts';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import { RowBetween } from '../Helpers';
 
 interface ModalProps extends ReactModal.Props {
   children?: ReactNode;
   contentClassName?: string;
+  title?: string;
 }
 
 export function Modal(props: ModalProps): React.JSX.Element {
-  const { children, contentClassName } = props;
+  const { children, contentClassName, title } = props;
 
   const customStyles = {
     overlay: {
@@ -37,6 +41,10 @@ export function Modal(props: ModalProps): React.JSX.Element {
       shouldCloseOnEsc={true}
       shouldCloseOnOverlayClick={true}
     >
+      <RowBetween className='w-full border-b px-4 py-4'>
+        <P14 className='font-semibold'>{title}</P14>
+        <CloseIcon onClick={props.onRequestClose} />
+      </RowBetween>
       <ModalContainer className={contentClassName}>{children}</ModalContainer>
     </ReactModal>
   );
@@ -47,4 +55,13 @@ const ModalContainer = tw.div`
   flex-col
   w-full
   p-10
+`;
+
+const CloseIcon = tw(XMarkIcon)`
+  text-gray-400
+  w-5
+  cursor-pointer
+  hover:text-gray-800
+  transition
+  duration-300
 `;

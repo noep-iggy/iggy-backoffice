@@ -5,15 +5,18 @@ import {
   ButtonBaseText,
 } from './internal/ButtonBase';
 
-export interface ButtonGhostProps extends ButtonBaseProps {}
+export interface ButtonGhostProps extends ButtonBaseProps {
+  outlined?: boolean;
+}
 
 export function ButtonGhost(props: ButtonGhostProps): React.JSX.Element {
-  const { children, isLoading, ...remainingProps } = props;
+  const { children, isLoading, outlined, ...remainingProps } = props;
 
   return (
     <ButtonGhostStyled
       loaderClassName='fill-blue-700'
       isLoading={isLoading}
+      $outlined={outlined}
       {...remainingProps}
     >
       <ButtonBaseText $isLoading={isLoading ?? false}>
@@ -23,14 +26,18 @@ export function ButtonGhost(props: ButtonGhostProps): React.JSX.Element {
   );
 }
 
-const ButtonGhostStyled = tw(ButtonBase)`
+interface ButtonGhostStyleProps {
+  $outlined?: boolean;
+}
+
+
+const ButtonGhostStyled = tw(ButtonBase)<ButtonGhostStyleProps>`
   text-gray-700
   bg-gray-50
   hover:bg-gray-200
   hover:text-gray-800
   disabled:bg-gray-25
   disabled:text-gray-300
-  border-gray-400
-  border
   hover:shadow-none
+  ${({ $outlined }) => ($outlined && 'border border-gray-300')}
 `;

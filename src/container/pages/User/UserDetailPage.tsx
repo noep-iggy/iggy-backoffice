@@ -61,10 +61,7 @@ export function UserDetailPage(): React.JSX.Element {
             value={getValues('email')}
             label={t('fields.email.label')}
             defaultValue={currentUser?.email}
-            onChange={(e) => {
-              register('email');
-              return e;
-            }}
+            register={register('email')}
             placeholder={t('fields.email.placeholder')}
             onHandleSubmit={handleSubmit(onSubmit)}
             error={errors.email?.message}

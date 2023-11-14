@@ -10,7 +10,7 @@ export function Loader(props: LoaderProps): JSX.Element {
   return (
     <svg
       role='status'
-      className={`inline text-gray-700 animate-spin fill-green-600 w-${size} h-${size} ${className}`}
+      className={`inline text-gray-700 animate-spin fill-primary w-${size} h-${size} ${className}`}
       viewBox='0 0 100 101'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

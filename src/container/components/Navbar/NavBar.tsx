@@ -59,7 +59,6 @@ const Main = tw.div`
   shadow-md
   rounded-md
   fixed
-  z-10
 `;
 
 const Content = tw.div`

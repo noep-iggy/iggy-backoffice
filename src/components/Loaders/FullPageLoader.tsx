@@ -6,13 +6,14 @@ import tw from 'tailwind-styled-components';
 interface LoaderProps {
   className?: string;
   isLoaded?: boolean;
+  selected: string;
 }
 
 export function FullPageLoader(props: LoaderProps): React.JSX.Element {
-  const { className, isLoaded } = props;
+  const { className, isLoaded, selected } = props;
 
   return (
-    <Layout className={className}>
+    <Layout selected={selected} className={`justify-center items-center ${className}`}>
       <Loader $isLoaded={isLoaded}>
         <Lottie animationData={LoaderAnimation} />
       </Loader>

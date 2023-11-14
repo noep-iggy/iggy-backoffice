@@ -10,16 +10,16 @@ const getAll = async (
   return (await HttpService.get(API_ROUTES.houses.getAll, { params })).data;
 }
 
-const getOne = async (userId: string): Promise<HouseDto> => {
-  return (await HttpService.get(API_ROUTES.houses.getOne(userId))).data;
+const getOne = async (houseId: string): Promise<HouseDto> => {
+  return (await HttpService.get(API_ROUTES.houses.getOne(houseId))).data;
 }
 
-const updateOne = async (userId: string, payload: UpdateHouseApi): Promise<HouseDto> => {
-  return (await HttpService.patch(API_ROUTES.houses.updateOne(userId), payload)).data;
+const updateOne = async (houseId: string, payload: UpdateHouseApi): Promise<HouseDto> => {
+  return (await HttpService.patch(API_ROUTES.houses.updateOne(houseId), payload)).data;
 }
 
-const deleteOne = async (userId: string): Promise<void> => {
-  await HttpService.delete(API_ROUTES.houses.deleteOne(userId));
+const deleteOne = async (houseId: string): Promise<void> => {
+  await HttpService.delete(API_ROUTES.houses.deleteOne(houseId));
 }
 
 export const HouseApiService = {

@@ -12,7 +12,8 @@
     "update": "Mettre à jour",
     "cancel": "Annuler",
     "add": "Ajouter",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "delete": "Supprimer"
   },
   "home": {
     "name": "home",
@@ -34,7 +35,11 @@
     },
     "detail": {
       "name": "Maison",
-      "title": "Détail de la maison"
+      "title": "Détail de la maison",
+      "delete":{
+        "title": "Supprimer la maison",
+        "content": "Êtes-vous sûr de vouloir supprimer cette maison ?"
+      }
     }
   },
   "user": {
@@ -70,6 +75,26 @@
         "notString": "L'email doit être une chaîne de caractères",
         "notValid": "L'email n'est pas valide"
       }
+    },
+    "name": {
+      "label": "Nom",
+      "placeholder": "Entrez un nom",
+      "errors": {
+        "required": "Le nom est requis",
+        "notString": "Le nom doit être une chaîne de caractères"
+      }
+    },
+    "billingPlan":{
+      "label": "Abonnement",
+      "placeholder": "Choisissez un abonnement",
+      "errors": {
+        "required": "L'abonnement est requis",
+        "notString": "L'abonnement doit être une chaîne de caractères"
+      }
+    },
+    "confirmDelete": {
+      "label": "Pour confirmer la suppression, veuillez saisir '<b>{{name}}</b>' dans le champ ci-dessous",
+      "placeholder": "Entrez '{{name}}' pour confirmer la suppression"
     },
     "password": {
       "label": "Mot de passe",

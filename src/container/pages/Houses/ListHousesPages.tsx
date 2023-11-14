@@ -2,7 +2,7 @@ import {
   ArrowsUpDownStyled,
   Cellule, H2,
   Input,
-  Layout, P18,
+  Layout, Loader, P18,
   RowCenter,
   TableHeader,
   TableHeaderItem,
@@ -65,7 +65,7 @@ export function ListHousesPage(): React.JSX.Element {
     <Layout selected={ROUTES.houses.list}>
       <H2 className='mb-7'>{t('houses.list.title')}</H2>
       <Input left={<MagnifyingGlassIcon/>} className='w-50' placeholder={t('houses.list.search')} onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} />
-      <TableHeader className='grid-cols-4 mt-1'>
+      <TableHeader className='grid-cols-4 mt-2'>
         <TableHeaderItem $isFocus={orderBy === 'name'} onClick={() => handleSortPlace('name')}>
           {t('houses.list.table.name')}
           {orderBy === 'name' && <ArrowsUpDownStyled $direction={orderType === 'ASC'} />}
@@ -83,36 +83,37 @@ export function ListHousesPage(): React.JSX.Element {
           {orderBy === 'billingPlan' && <ArrowsUpDownStyled $direction={orderType === 'ASC'} />}
         </TableHeaderItem>
       </TableHeader>
-      {houses.map((house: HouseDto) => (
-        <TableRow
-          className='grid-cols-4'
-          onMouseEnter={() => setRowTableHover(house.id)}
-          onMouseLeave={() => setRowTableHover(undefined)}
-          key={house.id}
-          onClick={() => router.push(ROUTES.houses.detail(house.id))}
-        >
-          <Cellule
-            $isFocus={orderBy === 'name' || rowTableHover === house.id}
+      {houses.length > 0 ?
+        houses.map((house: HouseDto) => (
+          <TableRow
+            className='grid-cols-4'
+            onMouseEnter={() => setRowTableHover(house.id)}
+            onMouseLeave={() => setRowTableHover(undefined)}
+            key={house.id}
+            onClick={() => router.push(ROUTES.houses.detail(house.id))}
           >
-            {house.name}
-          </Cellule>
-          <Cellule
-            $isFocus={orderBy === 'users' || rowTableHover === house.id}
-          >
-            {house.users?.map((user: UserDto) => user.firstName).join(', ')}
-          </Cellule>
-          <Cellule
-            $isFocus={orderBy === 'animals' || rowTableHover === house.id}
-          >
-            {house.animals?.map((animal: AnimalDto) => animal.name).join(', ')}
-          </Cellule>
-          <Cellule
-            $isFocus={orderBy === 'billingPlan' || rowTableHover === house.id}
-          >
-            {house.billingPlan}
-          </Cellule>
-        </TableRow>
-      ))}
+            <Cellule
+              $isFocus={orderBy === 'name' || rowTableHover === house.id}
+            >
+              {house.name}
+            </Cellule>
+            <Cellule
+              $isFocus={orderBy === 'users' || rowTableHover === house.id}
+            >
+              {house.users?.map((user: UserDto) => user.firstName).join(', ')}
+            </Cellule>
+            <Cellule
+              $isFocus={orderBy === 'animals' || rowTableHover === house.id}
+            >
+              {house.animals?.map((animal: AnimalDto) => animal.name).join(', ')}
+            </Cellule>
+            <Cellule
+              $isFocus={orderBy === 'billingPlan' || rowTableHover === house.id}
+            >
+              {house.billingPlan}
+            </Cellule>
+          </TableRow>
+        )) : <TableRow className='grid-cols-4'>{Array(4).fill(null).map((e)=> <Cellule key={e}><Loader size={5}/></Cellule>)}</TableRow>}
       <RowCenter className='mt-5 justify-center w-full'>
         <Icon className='mr-2' $disabled={page < 5} onClick={() => page >= 5 && setPage(page-5)}>
           <ChevronDoubleLeftIcon />
