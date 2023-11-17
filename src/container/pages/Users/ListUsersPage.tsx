@@ -15,9 +15,6 @@ import {
 import { ROUTES } from '@/routing';
 import { ApiService } from '@/services/api';
 import { UserDto } from '@/types';
-import { useTranslation } from 'next-i18next';
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import router from 'next/router';
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
@@ -25,36 +22,37 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
+import { useTranslation } from 'next-i18next';
+import router from 'next/router';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 export function ListUsersPage(): React.JSX.Element {
-  const [ users, setHouses ] = useState<UserDto[]>([]);
+  const [users, setUsers] = useState<UserDto[]>([]);
   const [orderBy, setOrderBy] = useState<keyof UserDto>('firstName');
   const [orderType, setOrderType] = useState<'ASC' | 'DESC'>('DESC');
-  const [ search, setSearch ] = useState<string>('');
+  const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<number>(0);
   const [rowTableHover, setRowTableHover] = useState<string>();
   const { t } = useTranslation();
 
   async function fetchUsers() {
-    const fetchedUsers = await ApiService.users.getAll(
-      {
-        orderType,
-        orderBy,
-        search,
-        page,
-        pageSize: 10,
-      }
-    );
-    if(fetchedUsers.length === 0 && page > 0) {
-      setPage(page-1);
+    const fetchedUsers = await ApiService.users.getAll({
+      orderType,
+      orderBy,
+      search,
+      page,
+      pageSize: 10,
+    });
+    if (fetchedUsers.length === 0 && page > 0) {
+      setPage(page - 1);
     }
-    setHouses(fetchedUsers);
+    setUsers(fetchedUsers);
   }
 
   useEffect(() => {
     fetchUsers();
-  }, [orderBy, orderType, search, page])
+  }, [orderBy, orderType, search, page]);
 
   function handleSort(by: keyof UserDto) {
     if (orderBy === by) {
@@ -70,34 +68,77 @@ export function ListUsersPage(): React.JSX.Element {
   return (
     <Layout selected={ROUTES.users.list}>
       <H2 className='mb-7'>{t('users.list.title')}</H2>
-      <Input left={<MagnifyingGlassIcon/>} className='w-50' placeholder={t('users.list.search')} onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} />
+      <Input
+        left={<MagnifyingGlassIcon />}
+        className='w-50'
+        placeholder={t('users.list.search')}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setSearch(e.target.value)
+        }
+      />
       <TableHeader className={`${nbColumns} mt-2`}>
-        <TableHeaderItem $isFocus={orderBy === 'firstName'} onClick={() => handleSort('firstName')}>
+        <TableHeaderItem
+          $isFocus={orderBy === 'firstName'}
+          onClick={() => handleSort('firstName')}
+        >
           {t('users.list.table.firstName')}
-          {orderBy === 'firstName' && <ArrowsUpDownStyled $direction={orderType === 'ASC'} />}
+          <ArrowsUpDownStyled
+            $isFocus={orderBy === 'firstName'}
+            $direction={orderType === 'ASC'}
+          />
         </TableHeaderItem>
-        <TableHeaderItem $isFocus={orderBy === 'lastName'} onClick={() => handleSort('lastName')}>
+        <TableHeaderItem
+          $isFocus={orderBy === 'lastName'}
+          onClick={() => handleSort('lastName')}
+        >
           {t('users.list.table.lastName')}
-          {orderBy === 'lastName' && <ArrowsUpDownStyled $direction={orderType === 'ASC'} />}
+          <ArrowsUpDownStyled
+            $isFocus={orderBy === 'lastName'}
+            $direction={orderType === 'ASC'}
+          />
         </TableHeaderItem>
-        <TableHeaderItem $isFocus={orderBy === 'email'} onClick={() => handleSort('email')}>
+        <TableHeaderItem
+          $isFocus={orderBy === 'email'}
+          onClick={() => handleSort('email')}
+        >
           {t('users.list.table.email')}
-          {orderBy === 'email' && <ArrowsUpDownStyled $direction={orderType === 'ASC'} />}
+          <ArrowsUpDownStyled
+            $isFocus={orderBy === 'email'}
+            $direction={orderType === 'ASC'}
+          />
         </TableHeaderItem>
-        <TableHeaderItem $isFocus={orderBy === 'role'} onClick={() => handleSort('role')}>
+        <TableHeaderItem
+          $isFocus={orderBy === 'role'}
+          onClick={() => handleSort('role')}
+        >
           {t('users.list.table.role')}
-          {orderBy === 'role' && <ArrowsUpDownStyled $direction={orderType === 'ASC'} />}
+          <ArrowsUpDownStyled
+            $isFocus={orderBy === 'role'}
+            $direction={orderType === 'ASC'}
+          />
         </TableHeaderItem>
-        <TableHeaderItem $isFocus={orderBy === 'house'} onClick={() => handleSort('house')}>
+        <TableHeaderItem
+          $isFocus={orderBy === 'house'}
+          onClick={() => handleSort('house')}
+        >
           {t('users.list.table.house')}
-          {orderBy === 'house' && <ArrowsUpDownStyled $direction={orderType === 'ASC'} />}
+          <ArrowsUpDownStyled
+            $isFocus={orderBy === 'house'}
+            $direction={orderType === 'ASC'}
+          />
         </TableHeaderItem>
-        <TableHeaderItem $isFocus={orderBy === 'isAdmin'} onClick={() => handleSort('isAdmin')}>
+        <TableHeaderItem
+          $isFocus={orderBy === 'isAdmin'}
+          onClick={() => handleSort('isAdmin')}
+        >
           {t('users.list.table.admin')}
-          {orderBy === 'isAdmin' && <ArrowsUpDownStyled $direction={orderType === 'ASC'} />}
+          <ArrowsUpDownStyled
+            $isFocus={orderBy === 'isAdmin'}
+            $direction={orderType === 'ASC'}
+          />
         </TableHeaderItem>
       </TableHeader>
-      {users.length > 0 ?
+      {users.length > 0 ? (
         users.map((user: UserDto) => (
           <TableRow
             className={nbColumns}
@@ -122,9 +163,10 @@ export function ListUsersPage(): React.JSX.Element {
               {user.email}
             </Cellule>
             <Cellule
+              $isEnum
               $isFocus={orderBy === 'role' || rowTableHover === user.id}
             >
-              {user.role}
+              {t(`enums.role.${user.role}`)}
             </Cellule>
             <Cellule
               $isFocus={orderBy === 'house' || rowTableHover === user.id}
@@ -138,19 +180,38 @@ export function ListUsersPage(): React.JSX.Element {
               {renderBoolean(user.isAdmin)}
             </Cellule>
           </TableRow>
-        )) : <TableRow className={nbColumns}>{Array(4).fill(null).map((e)=> <Cellule key={e}><Loader size={5}/></Cellule>)}</TableRow>}
-      <RowCenter className='mt-5 justify-center w-full'>
-        <Icon className='mr-2' $disabled={page < 5} onClick={() => page >= 5 && setPage(page-5)}>
+        ))
+      ) : (
+        <TableRow className={nbColumns}>
+          {Array(4)
+            .fill(null)
+            .map((e) => (
+              <Cellule key={e}>
+                <Loader size={5} />
+              </Cellule>
+            ))}
+        </TableRow>
+      )}
+      <RowCenter className='justify-center w-full mt-5'>
+        <Icon
+          className='mr-2'
+          $disabled={page < 5}
+          onClick={() => page >= 5 && setPage(page - 5)}
+        >
           <ChevronDoubleLeftIcon />
         </Icon>
-        <Icon className='ml-2' $disabled={page < 1} onClick={()=> page >= 1 && setPage(page-1)}>
+        <Icon
+          className='ml-2'
+          $disabled={page < 1}
+          onClick={() => page >= 1 && setPage(page - 1)}
+        >
           <ChevronLeftIcon />
         </Icon>
-        <CurrentPage>{page+1}</CurrentPage>
-        <Icon className='mr-2' onClick={()=> setPage(page+1)}>
+        <CurrentPage>{page + 1}</CurrentPage>
+        <Icon className='mr-2' onClick={() => setPage(page + 1)}>
           <ChevronRightIcon />
         </Icon>
-        <Icon className='ml-2' onClick={()=> setPage(page+5)}>
+        <Icon className='ml-2' onClick={() => setPage(page + 5)}>
           <ChevronDoubleRightIcon />
         </Icon>
       </RowCenter>
@@ -173,5 +234,7 @@ const Icon = tw.div<{ $disabled?: boolean }>`
   duration-200
   ease-in-out
   ${({ $disabled }) =>
-    $disabled ? 'text-gray-300 cursor-not-allowed' : 'text-gray-800 hover:text-gray-900'}
+    $disabled
+      ? 'text-gray-300 cursor-not-allowed'
+      : 'text-gray-800 hover:text-gray-900'}
 `;

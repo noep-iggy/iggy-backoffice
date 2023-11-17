@@ -28,7 +28,7 @@ export function InputEnumEdit(props: InputEnumEditProps): JSX.Element {
       {!isEditing ? (
         <div className='flex-col'>
           <P2Edit $isOpen={isEllipsisOpen} $isEmpty={!defaultValue || defaultValue === ''}>
-            {defaultValue && defaultValue !== '' ? defaultValue : placeholder}
+            {defaultValue && defaultValue !== '' ? t(`enums.${props.register?.name}.${defaultValue}`) : placeholder}
           </P2Edit>
           {defaultValue && defaultValue.toString()?.length > 130 && (
             <EditButton

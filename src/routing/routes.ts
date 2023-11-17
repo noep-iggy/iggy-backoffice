@@ -12,6 +12,10 @@ export const ROUTES = {
     list: '/animals',
     detail: (animalId: string) => `/animals/${animalId}`,
   },
+  tasks: {
+    list: '/tasks',
+    detail: (taskId: string) => `/tasks/${taskId}`,
+  },
   auth: {
     login: '/login',
   },

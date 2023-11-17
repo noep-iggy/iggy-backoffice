@@ -1,6 +1,10 @@
-import { PencilIcon, ArrowDownIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowDownIcon,
+  CheckIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 import tw from 'tailwind-styled-components';
-import { P18 } from '../Texts';
+import { P14 } from '../Texts';
 
 export const Grid1 = tw.div`
   grid grid-cols-1 gap-y-5 md:gap-5 w-full
@@ -56,10 +60,10 @@ export const RowBetween = tw(Row)`
   justify-between
 `;
 
-// TABLE 
+// TABLE
 
 export function renderBoolean(value: boolean) {
-  return value ? <CheckIconStyled /> : <XMarkIconStyled />
+  return value ? <CheckIconStyled /> : <XMarkIconStyled />;
 }
 
 export const Table = tw.div`
@@ -70,9 +74,11 @@ export const Table = tw.div`
 `;
 
 export const TableHeader = tw(Table)`
-  bg-primary
-  rounded-t-lg
+  bg-gray-50
   w-full
+  rounded-lg
+  border
+  border-gray-300
 `;
 
 export const TableRow = tw(Table)`
@@ -83,48 +89,48 @@ export const TableRow = tw(Table)`
   duration-200
   ease-in-out
   border-b
-  border-gray-300
+  py-2
 `;
 
-export const Cellule = tw(P18) <{ $isFocus?: boolean }>`
+export const Cellule = tw(P14)<{ $isFocus?: boolean; $isEnum?: boolean }>`
   col-span-1
   flex
   items-center
   justify-start
-  text-gray-600
+  text-gray-900
   transition
   duration-200
   ease-in-out
-  opacity-60
+  opacity-50
   ${({ $isFocus }) =>
     $isFocus &&
     `
     opacity-100
   `}
+  ${({ $isEnum }) =>
+    $isEnum && 'rounded-lg border border-gray-700 w-fit px-2 py-1'}
 `;
 
-export const TableHeaderItem = tw(Cellule) <{ $isFocus?: boolean }>`
+export const TableHeaderItem = tw(Cellule)<{ $isFocus?: boolean }>`
   font-bold
-  text-gray-100
+  text-black
   cursor-pointer
-  hover:text-gray-200
+  hover:opacity-80
 `;
 
-export const EditIconStyled = tw(PencilIcon)`
-  h-5
-  w-5
-  text-gray-500
-`;
-
-export const ArrowsUpDownStyled = tw(ArrowDownIcon) <{ $direction?: boolean }>`
+export const ArrowsUpDownStyled = tw(ArrowDownIcon)<{
+  $direction?: boolean;
+  $isFocus?: boolean;
+}>`
   h-5
   w-5
   transition
   duration-200
   ease-in-out
   ml-1
-  ${({ $direction }) =>
+  ${({ $direction, $isFocus }) =>
     $direction &&
+    $isFocus &&
     `
     rotate-180
   `}

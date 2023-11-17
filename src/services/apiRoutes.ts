@@ -25,6 +25,15 @@ export const API_ROUTES = {
     updateOne: (animalId: string) => `/admin/animals/${animalId}`,
     deleteOne: (animalId: string) => `/admin/animals/${animalId}`,
   },
+  tasks: {
+    getAll: '/admin/tasks',
+    getOne: (taskId: string) => `/admin/tasks/${taskId}`,
+    updateOne: (taskId: string) => `/admin/tasks/${taskId}`,
+    deleteOne: (taskId: string) => `/admin/tasks/${taskId}`,
+    removeRecurrence: (taskId: string) =>
+      `/admin/tasks/${taskId}/remove-recurrence`,
+    getTasksByHouseId: (houseId: string) => `/admin/houses/${houseId}/tasks`,
+  },
   admin: {
     createDefaultAdmin: '/admin/create-default-admin',
     toggleAdminStatus: (userId: string) =>

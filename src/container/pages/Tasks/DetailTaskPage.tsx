@@ -27,54 +27,58 @@ import {
   formatValidationErrorMessage,
 } from '@/services/error';
 import { formatDate } from '@/services/utils';
-import { BillingPlanTypeEnum, HouseDto, UpdateHouseApi } from '@/types';
-import { houseValidation } from '@/validations';
+import {
+  TaskDto,
+  TaskRecurrenceEnumUi,
+  TaskStatusEnum,
+  UpdateTaskApi,
+} from '@/types';
+import { taskValidation } from '@/validations';
 import { ArrowLeftIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'next-i18next';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-interface DetailHousePageProps {
+
+interface DetailTaskPageProps {
   idPage: string;
 }
 
-export function DetailHousePage(
-  props: DetailHousePageProps
-): React.JSX.Element {
+export function DetailTaskPage(props: DetailTaskPageProps): React.JSX.Element {
   const { idPage } = props;
   const { t } = useTranslation();
-  const [house, setHouse] = useState<HouseDto>();
+  const [task, setTask] = useState<TaskDto>();
   const [errorApi, setErrorApi] = useState<string>('');
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitted },
     setError,
     register,
-    getValues,
     watch,
-  } = useForm<UpdateHouseApi>({
-    resolver: yupResolver(houseValidation.update),
+  } = useForm<UpdateTaskApi>({
+    resolver: yupResolver(taskValidation.update),
     values: {
-      billingPlan: house?.billingPlan,
+      status: task?.status,
+      recurrence: task?.recurrence,
     },
   });
 
-  async function fetchHouse() {
-    const house = await ApiService.houses.getOne(idPage);
-    setHouse(house);
+  async function fetchTask() {
+    const task = await ApiService.tasks.getOne(idPage);
+    setTask(task);
   }
 
   useEffect(() => {
-    fetchHouse();
+    fetchTask();
   }, []);
 
-  async function onSubmit(data: UpdateHouseApi) {
+  async function onSubmit(data: UpdateTaskApi) {
     try {
-      if (!house) return;
-      await ApiService.houses.updateOne(house.id, {
+      if (!task) return;
+      await ApiService.tasks.updateOne(task.id, {
         ...data,
       });
       router.reload();
@@ -85,40 +89,70 @@ export function DetailHousePage(
     }
   }
 
+  async function removeRecurrence() {
+    await ApiService.tasks.removeRecurrence(idPage);
+    router.reload();
+  }
+
+  useEffect(() => {
+    if (
+      (watch('recurrence.type') as unknown as TaskRecurrenceEnumUi) ===
+      TaskRecurrenceEnumUi.NULL
+    ) {
+      removeRecurrence();
+    }
+  }, [isSubmitted]);
+
   return (
-    <Layout selected={ROUTES.houses.list}>
-      <BackDetailPage onClick={() => router.push(ROUTES.houses.list)}>
+    <Layout selected={ROUTES.tasks.list}>
+      <BackDetailPage onClick={() => router.push(ROUTES.tasks.list)}>
         <ArrowLeftIcon className='w-4 mr-1' />
         <P14 className='font-semibold'>{t('generics.back')}</P14>
       </BackDetailPage>
       <DetailPage>
         <TitleDetailPage className='mt-5'>
-          {t('houses.detail.title')}
+          {t('tasks.detail.title')}
         </TitleDetailPage>
-        {house ? (
+        {task ? (
           <>
             <FormDetailPage onSubmit={handleSubmit(onSubmit)}>
               <InputEdit
-                value={getValues('name')}
-                label={t('fields.name.label')}
-                defaultValue={house.name}
-                register={register('name')}
-                placeholder={t('fields.name.placeholder')}
+                value={watch('title')}
+                label={t('fields.title.label')}
+                defaultValue={task.title}
+                register={register('title')}
+                placeholder={t('fields.title.placeholder')}
                 onHandleSubmit={handleSubmit(onSubmit)}
-                error={errors.name?.message}
+                error={errors.title?.message}
               />
               <InputEnumEdit
-                label={t('fields.billingPlan.label')}
-                options={Object.values(BillingPlanTypeEnum).map((v) => {
+                label={t('fields.status.label')}
+                options={Object.values(TaskStatusEnum).map((v) => {
                   return {
-                    label: t(`enums.billingPlan.${v}`),
+                    label: t(`enums.status.${v}`),
                     value: v,
                   };
                 })}
-                register={register('billingPlan')}
-                error={errors.billingPlan?.message}
-                value={watch('billingPlan')}
-                defaultValue={house.billingPlan}
+                register={register('status')}
+                placeholder={t('fields.status.placeholder')}
+                error={errors.status?.message}
+                value={watch('status')}
+                defaultValue={task.status}
+                onHandleSubmit={handleSubmit(onSubmit)}
+              />
+              <InputEnumEdit
+                label={t('fields.recurrence.label')}
+                options={Object.values(TaskRecurrenceEnumUi).map((v) => {
+                  return {
+                    label: t(`enums.recurrence.type.${v}`),
+                    value: v,
+                  };
+                })}
+                register={register('recurrence.type')}
+                error={errors.recurrence?.message}
+                value={watch('recurrence.type') ?? TaskRecurrenceEnumUi.NULL}
+                defaultValue={task.recurrence?.type}
+                placeholder={t('fields.recurrence.placeholder')}
                 onHandleSubmit={handleSubmit(onSubmit)}
               />
               {errorApi && (
@@ -127,39 +161,37 @@ export function DetailHousePage(
                 </ErrorMessage>
               )}
             </FormDetailPage>
-            <TitleDetailPage>
-              {t('houses.detail.general.title')}
-            </TitleDetailPage>
+            <TitleDetailPage>{t('tasks.detail.general.title')}</TitleDetailPage>
             <InfosDetailPage>
               <RowInfosDetailPage>
                 <LabelRowInfosDetailPage>
-                  {t('houses.detail.general.id')}
+                  {t('tasks.detail.general.id')}
                 </LabelRowInfosDetailPage>
-                <ValueRowInfosDetailPage>{house.id}</ValueRowInfosDetailPage>
+                <ValueRowInfosDetailPage>{task.id}</ValueRowInfosDetailPage>
               </RowInfosDetailPage>
               <RowInfosDetailPage>
                 <LabelRowInfosDetailPage>
-                  {t('houses.detail.general.createAt')}
+                  {t('tasks.detail.general.createAt')}
                 </LabelRowInfosDetailPage>
                 <ValueRowInfosDetailPage>
-                  {formatDate(house.createdAt)}
+                  {formatDate(task.createdAt)}
                 </ValueRowInfosDetailPage>
               </RowInfosDetailPage>
               <RowInfosDetailPage>
                 <LabelRowInfosDetailPage>
-                  {t('houses.detail.general.updateAt')}
+                  {t('tasks.detail.general.updateAt')}
                 </LabelRowInfosDetailPage>
                 <ValueRowInfosDetailPage>
-                  {formatDate(house.updatedAt)}
+                  {formatDate(task.updatedAt)}
                 </ValueRowInfosDetailPage>
               </RowInfosDetailPage>
               <RowInfosDetailPage>
                 <LabelRowInfosDetailPage>
-                  {t('houses.detail.general.animals')}
+                  {t('tasks.detail.general.animals')}
                 </LabelRowInfosDetailPage>
                 <ValueRowInfosDetailPage>
-                  {house.animals
-                    ? house.animals.map((animal, index) => (
+                  {task.animals
+                    ? task.animals.map((animal, index) => (
                         <span
                           className='underline cursor-pointer'
                           onClick={() =>
@@ -168,7 +200,7 @@ export function DetailHousePage(
                           key={animal.id}
                         >
                           {animal.name}
-                          {index !== house.animals.length - 1 && ', '}
+                          {index !== task.animals.length - 1 && ', '}
                         </span>
                       ))
                     : t('generics.empty')}
@@ -176,11 +208,11 @@ export function DetailHousePage(
               </RowInfosDetailPage>
               <RowInfosDetailPage>
                 <LabelRowInfosDetailPage>
-                  {t('houses.detail.general.users')}
+                  {t('tasks.detail.general.users')}
                 </LabelRowInfosDetailPage>
                 <ValueRowInfosDetailPage>
-                  {house.users
-                    ? house.users.map((user, index) => {
+                  {task.users
+                    ? task.users.map((user, index) => {
                         return (
                           <span
                             className='underline cursor-pointer'
@@ -190,7 +222,7 @@ export function DetailHousePage(
                             key={user.id}
                           >
                             {user.firstName}
-                            {index !== house.users.length - 1 && ', '}
+                            {index !== task.users.length - 1 && ', '}
                           </span>
                         );
                       })
@@ -198,15 +230,15 @@ export function DetailHousePage(
                 </ValueRowInfosDetailPage>
               </RowInfosDetailPage>
             </InfosDetailPage>
-            <TitleDetailPage>{t('houses.detail.actions')}</TitleDetailPage>
+            <TitleDetailPage>{t('tasks.detail.actions')}</TitleDetailPage>
             <InfosDetailPage className='border-red-300'>
               <RowInfosDetailPage>
                 <Col className='w-1/2'>
                   <LabelRowInfosDetailPage>
-                    {t('houses.detail.delete.title')}
+                    {t('tasks.detail.delete.title')}
                   </LabelRowInfosDetailPage>
                   <ValueRowInfosDetailPage className='mt-1'>
-                    {t('houses.detail.delete.ifDelete')}
+                    {t('tasks.detail.delete.ifDelete')}
                   </ValueRowInfosDetailPage>
                 </Col>
                 <ButtonDeleteDetailPage
@@ -226,12 +258,12 @@ export function DetailHousePage(
       <DeleteModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        description={t('houses.detail.delete.content')}
-        name={house?.name ?? ''}
+        description={t('tasks.detail.delete.content')}
+        name={task?.title ?? ''}
         onDelete={async () => {
-          if (!house) return;
-          await ApiService.houses.deleteOne(house.id);
-          router.push(ROUTES.houses.list);
+          if (!task) return;
+          await ApiService.tasks.deleteOne(task.id);
+          router.push(ROUTES.tasks.list);
         }}
       />
     </Layout>

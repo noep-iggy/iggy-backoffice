@@ -1,13 +1,13 @@
 import { AuthWall, SeoHead } from '@/container/components';
-import { ListHousesPage } from '@/container/pages';
+import { ListTasksPage } from '@/container/pages';
 import { PageBaseProps } from '@/types';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-export default function IndexPage(): React.JSX.Element {
+export default function index(): React.JSX.Element {
   return (
     <AuthWall>
       <SeoHead />
-      <ListHousesPage />
+      <ListTasksPage />
     </AuthWall>
   );
 }

@@ -13,7 +13,7 @@
     "cancel": "Annuler",
     "add": "Ajouter",
     "search": "Rechercher",
-    "delete": "Supprimer", 
+    "delete": "Supprimer",
     "empty": "Aucune donnée"
   },
   "home": {
@@ -31,7 +31,8 @@
         "name": "Nom",
         "users": "Utilisateurs",
         "animals": "Animaux",
-        "billingPlan": "Abonnement"
+        "billingPlan": "Abonnement",
+        "id": "ID"
       }
     },
     "detail": {
@@ -42,18 +43,19 @@
         "users": "Utilisateurs",
         "animals": "Animaux",
         "createAt": "Créé le",
-        "updateAt": "Mis à jour le"
+        "updateAt": "Mis à jour le",
+        "id": "ID"
       },
       "actions": "Actions",
-      "delete":{
+      "delete": {
         "title": "Supprimer la maison",
         "content": "Êtes-vous sûr de vouloir supprimer cette maison ?",
         "ifDelete": "Si vous supprimez cette maison, tous les utilisateurs, animaux et tâches associés seront supprimés"
       }
     }
   },
-  "users":{
-    "list":{
+  "users": {
+    "list": {
       "name": "Utilisateurs",
       "title": "Liste des utilisateurs",
       "search": "Rechercher un utilisateur",
@@ -75,13 +77,15 @@
         "house": "Maison",
         "admin": "Administrateur",
         "createAt": "Créé le",
-        "updateAt": "Mis à jour le"
+        "updateAt": "Mis à jour le",
+        "id": "ID",
+        "tasks": "Tâches"
       },
-      "delete":{
+      "delete": {
         "title": "Supprimer l'utilisateur",
         "content": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
         "ifDelete": "Si vous supprimez cet utilisateur, toutes les tâches associées seront supprimées"
-      }, 
+      },
       "changeAdminStatus": {
         "label": "Changer le rôle d'administrateur",
         "add": "Ajouter",
@@ -96,14 +100,14 @@
       "name": "Animaux",
       "title": "Liste des animaux",
       "search": "Rechercher un animal",
-      "table":{
+      "table": {
         "name": "Nom",
         "gender": "Genre",
-        "type": "Type", 
-        "status": "Statut", 
+        "type": "Type",
+        "status": "Statut",
         "house": "Maison"
       }
-    }, 
+    },
     "detail": {
       "name": "Animal",
       "title": "Détail de l'animal",
@@ -112,20 +116,94 @@
         "title": "Informations générales",
         "house": "Maison",
         "createAt": "Créé le",
-        "updateAt": "Mis à jour le"
+        "updateAt": "Mis à jour le",
+        "id": "ID"
       },
-      "delete":{
+      "delete": {
         "title": "Supprimer l'animal",
         "content": "Êtes-vous sûr de vouloir supprimer cet animal ?",
         "ifDelete": "Si vous supprimez cet animal, toutes les tâches associées seront supprimées"
       }
     }
   },
+  "tasks": {
+    "list": {
+      "name": "Tâches",
+      "title": "Liste des tâches",
+      "search": "Rechercher une tâche",
+      "houseId": "Entrer l'ID de la maison",
+      "table": {
+        "title": "Titre",
+        "status": "Statut",
+        "users": "Utilisateurs",
+        "animals": "Animals",
+        "recurrence": "Récurrence"
+      }
+    },
+    "detail": {
+      "name": "Tâche",
+      "title": "Détail de la tâche",
+      "actions": "Actions",
+      "general": {
+        "title": "Informations générales",
+        "createAt": "Créé le",
+        "updateAt": "Mis à jour le",
+        "users": "Utilisateurs",
+        "animals": "Animaux",
+        "id": "ID"
+      },
+      "removeRecurrence": {
+        "title": "Supprimer la récurrence",
+        "ifRemove": "Si vous supprimez la récurrence, la tâche ne sera plus répétée"
+      },
+      "delete": {
+        "title": "Supprimer la tâche",
+        "content": "Êtes-vous sûr de vouloir supprimer cette tâche ?",
+        "ifDelete": "Si vous supprimez cette tâche, elle ne sera plus disponible pour les utilisateurs et les animaux associés"
+      }
+    }
+  },
+  "enums": {
+    "recurrence": {
+      "type": {
+        "DAILY": "Tous les jours",
+        "MONTHLY": "Tous les mois",
+        "WEEKLY": "Toutes les semaines",
+        "NULL": "Aucune récurrence"
+      }
+    },
+    "status": {
+      "TODO": "A faire",
+      "DONE": "Terminé",
+      "TO_VALIDATE": "A valider",
+      "ARCHIVED": "Archivé",
+      "SLEEPING": "En sommeil",
+      "HAPPY": "Heureux",
+      "NORMAL": "Normal",
+      "SAD": "Triste"
+    },
+    "role": {
+      "PARENT": "Parent",
+      "CHILD": "Enfant"
+    },
+    "type": {
+      "DOG": "Chien",
+      "CAT": "Chat"
+    },
+    "gender": {
+      "MASCULINE": "Mâle",
+      "FEMININE": "Femelle"
+    },
+    "billingPlan": {
+      "FREE": "Gratuit",
+      "PREMIUM": "Premium"
+    }
+  },
   "fields": {
     "generics": {
       "addData": "Ajouter une valeur"
     },
-     "firstName": {
+    "firstName": {
       "label": "Prénom",
       "placeholder": "Entrez votre prénom",
       "errors": {
@@ -150,7 +228,7 @@
         "notValid": "L'email n'est pas valide"
       }
     },
-    "role":{
+    "role": {
       "label": "Rôle",
       "placeholder": "Choisissez un rôle",
       "errors": {
@@ -166,7 +244,23 @@
         "notString": "Le nom doit être une chaîne de caractères"
       }
     },
-    "billingPlan":{
+    "title": {
+      "label": "Titre",
+      "placeholder": "Entrez un titre",
+      "errors": {
+        "required": "Le titre est requis",
+        "notString": "Le titre doit être une chaîne de caractères"
+      }
+    },
+    "recurrence": {
+      "label": "Récurrence",
+      "placeholder": "Choisissez une récurrence",
+      "errors": {
+        "required": "La récurrence est requise",
+        "notString": "La récurrence doit être une chaîne de caractères"
+      }
+    },
+    "billingPlan": {
       "label": "Abonnement",
       "placeholder": "Choisissez un abonnement",
       "errors": {
@@ -174,7 +268,7 @@
         "notString": "L'abonnement doit être une chaîne de caractères"
       }
     },
-    "gender":{
+    "gender": {
       "label": "Genre",
       "placeholder": "Choisissez un genre",
       "errors": {
@@ -182,7 +276,7 @@
         "notString": "Le genre doit être une chaîne de caractères"
       }
     },
-    "type":{
+    "type": {
       "label": "Type",
       "placeholder": "Choisissez un type",
       "errors": {
@@ -190,7 +284,7 @@
         "notString": "Le type doit être une chaîne de caractères"
       }
     },
-    "status":{
+    "status": {
       "label": "Statut",
       "placeholder": "Choisissez un statut",
       "errors": {

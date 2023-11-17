@@ -1,7 +1,7 @@
 import { AnimalIcon, AvatarUser, Col, P12, P14, Row } from '@/components';
 import { useAuthContext } from '@/contexts';
 import { ROUTES } from '@/routing';
-import { HomeIcon, UserIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, UserIcon, WrenchScrewdriverIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/dist/client/router';
 import React from 'react';
@@ -40,6 +40,12 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
             <AnimalIcon />
           </LogoNavigation>
           <P14>{t('animals.list.name')}</P14>
+        </Navigation>
+        <Navigation $selected={ROUTES.tasks.list === selected}  onClick={() => router.push(ROUTES.tasks.list)}>
+          <LogoNavigation $selected={ROUTES.tasks.list === selected}>
+            <WrenchScrewdriverIcon />
+          </LogoNavigation>
+          <P14>{t('tasks.list.name')}</P14>
         </Navigation>
       </Content>
       <Separator />

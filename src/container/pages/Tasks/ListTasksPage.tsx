@@ -6,6 +6,7 @@ import {
   Layout,
   Loader,
   P18,
+  Row,
   RowCenter,
   TableHeader,
   TableHeaderItem,
@@ -13,7 +14,7 @@ import {
 } from '@/components';
 import { ROUTES } from '@/routing';
 import { ApiService } from '@/services/api';
-import { AnimalDto, HouseDto, UserDto } from '@/types';
+import { AnimalDto, TaskDto, UserDto } from '@/types';
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
@@ -26,34 +27,40 @@ import router from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
-export function ListHousesPage(): React.JSX.Element {
-  const [houses, setHouses] = useState<HouseDto[]>([]);
-  const [orderBy, setOrderBy] = useState<keyof HouseDto>('name');
+export function ListTasksPage(): React.JSX.Element {
+  const [tasks, setTasks] = useState<TaskDto[]>([]);
+  const [orderBy, setOrderBy] = useState<keyof TaskDto>('title');
   const [orderType, setOrderType] = useState<'ASC' | 'DESC'>('DESC');
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<number>(0);
   const [rowTableHover, setRowTableHover] = useState<string>();
+  const [houseId, setHouseId] = useState<string>('');
   const { t } = useTranslation();
 
-  async function fetchHouses() {
-    const fetchedHouses = await ApiService.houses.getAll({
+  async function fetchTasks() {
+    const filters = {
       orderType,
       orderBy,
       search,
       page,
       pageSize: 10,
-    });
-    if (fetchedHouses.length === 0 && page > 0) {
+    };
+    const fetchedTasks =
+      houseId !== ''
+        ? await ApiService.tasks.getTasksByHouseId(houseId, filters)
+        : await ApiService.tasks.getAll(filters);
+    if (fetchedTasks.length === 0 && page > 0) {
       setPage(page - 1);
     }
-    setHouses(fetchedHouses);
+    console.log('[D] ListTasksPage', fetchedTasks);
+    setTasks(fetchedTasks);
   }
 
   useEffect(() => {
-    fetchHouses();
-  }, [orderBy, orderType, search, page]);
+    fetchTasks();
+  }, [orderBy, orderType, search, page, houseId]);
 
-  function handleSortPlace(by: keyof HouseDto) {
+  function handleSortPlace(by: keyof TaskDto) {
     if (orderBy === by) {
       setOrderType(orderType === 'ASC' ? 'DESC' : 'ASC');
     } else {
@@ -62,27 +69,37 @@ export function ListHousesPage(): React.JSX.Element {
     setOrderBy(by);
   }
 
-  const nbColumns = 'grid-cols-4';
+  const nbColumns = 'grid-cols-5';
 
   return (
-    <Layout selected={ROUTES.houses.list}>
-      <H2 className='mb-7'>{t('houses.list.title')}</H2>
-      <Input
-        left={<MagnifyingGlassIcon />}
-        className='w-50'
-        placeholder={t('houses.list.search')}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setSearch(e.target.value)
-        }
-      />
+    <Layout selected={ROUTES.tasks.list}>
+      <H2 className='mb-7'>{t('tasks.list.title')}</H2>
+      <Row className='gap-2'>
+        <Input
+          left={<MagnifyingGlassIcon />}
+          className='w-50'
+          placeholder={t('tasks.list.search')}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setSearch(e.target.value)
+          }
+        />
+        <Input
+          className='w-50'
+          placeholder={t('tasks.list.houseId')}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setHouseId(e.target.value)
+          }
+          value={houseId}
+        />
+      </Row>
       <TableHeader className={`${nbColumns} mt-2`}>
         <TableHeaderItem
-          $isFocus={orderBy === 'name'}
-          onClick={() => handleSortPlace('name')}
+          $isFocus={orderBy === 'title'}
+          onClick={() => handleSortPlace('title')}
         >
-          {t('houses.list.table.name')}
+          {t('tasks.list.table.title')}
           <ArrowsUpDownStyled
-            $isFocus={orderBy === 'name'}
+            $isFocus={orderBy === 'title'}
             $direction={orderType === 'ASC'}
           />
         </TableHeaderItem>
@@ -90,7 +107,7 @@ export function ListHousesPage(): React.JSX.Element {
           $isFocus={orderBy === 'users'}
           onClick={() => handleSortPlace('users')}
         >
-          {t('houses.list.table.users')}
+          {t('tasks.list.table.users')}
           <ArrowsUpDownStyled
             $isFocus={orderBy === 'users'}
             $direction={orderType === 'ASC'}
@@ -100,54 +117,68 @@ export function ListHousesPage(): React.JSX.Element {
           $isFocus={orderBy === 'animals'}
           onClick={() => handleSortPlace('animals')}
         >
-          {t('houses.list.table.animals')}
+          {t('tasks.list.table.animals')}
           <ArrowsUpDownStyled
             $isFocus={orderBy === 'animals'}
             $direction={orderType === 'ASC'}
           />
         </TableHeaderItem>
         <TableHeaderItem
-          $isFocus={orderBy === 'billingPlan'}
-          onClick={() => handleSortPlace('billingPlan')}
+          $isFocus={orderBy === 'recurrence'}
+          onClick={() => handleSortPlace('recurrence')}
         >
-          {t('houses.list.table.billingPlan')}
+          {t('tasks.list.table.recurrence')}
           <ArrowsUpDownStyled
-            $isFocus={orderBy === 'billingPlan'}
+            $isFocus={orderBy === 'recurrence'}
+            $direction={orderType === 'ASC'}
+          />
+        </TableHeaderItem>
+        <TableHeaderItem
+          $isFocus={orderBy === 'status'}
+          onClick={() => handleSortPlace('status')}
+        >
+          {t('tasks.list.table.status')}
+          <ArrowsUpDownStyled
+            $isFocus={orderBy === 'status'}
             $direction={orderType === 'ASC'}
           />
         </TableHeaderItem>
       </TableHeader>
-      {houses.length > 0 ? (
-        houses.map((house: HouseDto) => (
+      {tasks.length > 0 ? (
+        tasks.map((task: TaskDto) => (
           <TableRow
             className={nbColumns}
-            onMouseEnter={() => setRowTableHover(house.id)}
+            onMouseEnter={() => setRowTableHover(task.id)}
             onMouseLeave={() => setRowTableHover(undefined)}
-            key={house.id}
-            onClick={() => router.push(ROUTES.houses.detail(house.id))}
+            key={task.id}
+            onClick={() => router.push(ROUTES.tasks.detail(task.id))}
           >
             <Cellule
-              $isFocus={orderBy === 'name' || rowTableHover === house.id}
+              $isFocus={orderBy === 'title' || rowTableHover === task.id}
             >
-              {house.name}
+              {task.title}
             </Cellule>
             <Cellule
-              $isFocus={orderBy === 'users' || rowTableHover === house.id}
+              $isFocus={orderBy === 'users' || rowTableHover === task.id}
             >
-              {house.users?.map((user: UserDto) => user.firstName).join(', ')}
+              {task.users?.map((user: UserDto) => user.firstName).join(', ')}
             </Cellule>
             <Cellule
-              $isFocus={orderBy === 'animals' || rowTableHover === house.id}
+              $isFocus={orderBy === 'animals' || rowTableHover === task.id}
             >
-              {house.animals
-                ?.map((animal: AnimalDto) => animal.name)
-                .join(', ')}
+              {task.animals?.map((animal: AnimalDto) => animal.name).join(', ')}
             </Cellule>
             <Cellule
               $isEnum
-              $isFocus={orderBy === 'billingPlan' || rowTableHover === house.id}
+              $isFocus={orderBy === 'recurrence' || rowTableHover === task.id}
             >
-              {t(`enums.billingPlan.${house.billingPlan}`)}
+              {t(`enums.recurrence.type.${task.recurrence?.type ?? 'NULL'}`)}
+            </Cellule>
+            <Cellule
+              $isEnum
+              $isFocus={orderBy === 'status' || rowTableHover === task.id}
+            >
+              {t(`enums.status.${task.status}`)}
             </Cellule>
           </TableRow>
         ))
