@@ -95,6 +95,40 @@
       }
     }
   },
+  "affiliates": {
+    "list": {
+      "name": "Affiliations",
+      "title": "Liste des affiliations",
+      "search": "Rechercher une affiliation",
+      "animalType": "Type d'animal",
+      "table": {
+        "title": "Titre",
+        "animals": "Animaux",
+        "brand": "Marque",
+        "basePrice": "Prix de base",
+        "discountPrice": "Prix de vente"
+      }
+    },
+    "detail": {
+      "name": "Affiliation",
+      "title": "Détail de l'affiliation",
+      "actions": "Actions",
+      "general": {
+        "title": "Informations générales",
+        "createAt": "Créé le",
+        "updateAt": "Mis à jour le",
+        "id": "ID"
+      },
+      "delete": {
+        "title": "Supprimer l'affiliation",
+        "content": "Êtes-vous sûr de vouloir supprimer cette affiliation ?",
+        "ifDelete": "Si vous supprimez cette affiliation, elle ne sera plus disponible pour les utilisateurs et les animaux associés"
+      }
+    },
+    "create": {
+      "title": "Créer une affiliation"
+    }
+  },
   "animals": {
     "list": {
       "name": "Animaux",
@@ -244,12 +278,71 @@
         "notString": "Le nom doit être une chaîne de caractères"
       }
     },
+    "animals": {
+      "label": "Animaux",
+      "placeholder": "Choisissez un animal ou plusieurs animaux",
+      "errors": {
+        "required": "L'animal est requis",
+        "notString": "L'animal doit être une chaîne de caractères"
+      }
+    },
+    "basePrice": {
+      "label": "Prix de base",
+      "placeholder": "Entrez un prix de base",
+      "errors": {
+        "required": "Le prix de base est requis",
+        "notString": "Le prix de base doit être une chaîne de caractères",
+        "notNumber": "Le prix de base doit être un nombre"
+      }
+    },
+    "discountPrice": {
+      "label": "Prix de vente",
+      "placeholder": "Entrez un prix de vente",
+      "errors": {
+        "required": "Le prix de vente est requis",
+        "notString": "Le prix de vente doit être une chaîne de caractères",
+        "notNumber": "Le prix de vente doit être un nombre"
+      }
+    },
+    "url": {
+      "label": "URL",
+      "placeholder": "Entrez une URL",
+      "errors": {
+        "required": "L'URL est requise",
+        "notString": "L'URL doit être une chaîne de caractères",
+        "notValid": "L'URL n'est pas valide"
+      }
+    },
     "title": {
       "label": "Titre",
       "placeholder": "Entrez un titre",
       "errors": {
         "required": "Le titre est requis",
         "notString": "Le titre doit être une chaîne de caractères"
+      }
+    },
+    "image": {
+      "label": "Image",
+      "placeholder": "Choisissez une image",
+      "errors": {
+        "required": "L'image est requise",
+        "notString": "L'image doit être une chaîne de caractères"
+      }
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Entrez une description",
+      "errors": {
+        "required": "La description est requise",
+        "notString": "La description doit être une chaîne de caractères"
+      }
+    },
+    "brand": {
+      "label": "Marque",
+      "placeholder": "Entrez une marque",
+      "errors": {
+        "required": "La marque est requise",
+        "notString": "La marque doit être une chaîne de caractères"
       }
     },
     "recurrence": {

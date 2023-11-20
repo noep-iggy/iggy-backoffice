@@ -16,6 +16,10 @@ export const ROUTES = {
     list: '/tasks',
     detail: (taskId: string) => `/tasks/${taskId}`,
   },
+  affiliates: {
+    list: '/affiliates',
+    detail: (affiliateId: string) => `/affiliates/${affiliateId}`,
+  },
   auth: {
     login: '/login',
   },

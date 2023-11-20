@@ -1,32 +1,40 @@
 import { OptionDescriptor } from '@/types';
 import { useTranslation } from 'next-i18next';
-import { UseFormRegisterReturn } from 'react-hook-form';
 import tw from 'tailwind-styled-components';
 import { ErrorMessage } from '../ErrorMessage';
 import { P12 } from '../Texts';
 import { LabelStyled, MainContainer } from './InputCommon';
 
-export interface InputEnumProps extends React.HTMLProps<HTMLInputElement> {
+export interface InputEnumMulitpleProps
+  extends Omit<React.HTMLProps<HTMLInputElement>, 'onChange'> {
   options: OptionDescriptor[];
   error?: string;
-  register?: UseFormRegisterReturn;
   className?: string;
   inputContainerClassName?: string;
-  value?: string;
+  value: string[];
   disabled?: boolean;
   label?: string;
+  onChange: (value: string[]) => void;
 }
 
-export function InputEnum(props: InputEnumProps): JSX.Element {
+export function InputEnumMulitple(props: InputEnumMulitpleProps): JSX.Element {
   const {
     className,
     options,
+    onChange,
     value,
     error,
-    register,
     inputContainerClassName,
   } = props;
   const { t } = useTranslation();
+
+  function handleOnChange(newValue: string) {
+    if (value.includes(newValue)) {
+      onChange(value.filter((v) => v !== newValue));
+    } else {
+      onChange([...value, newValue]);
+    }
+  }
 
   return (
     <MainContainer className={className}>
@@ -34,17 +42,10 @@ export function InputEnum(props: InputEnumProps): JSX.Element {
       <ItemsContainer className={inputContainerClassName}>
         {options.map((option) => (
           <Item
-            htmlFor={option.value}
             key={option.value}
-            $isSelected={value === option.value}
+            $isSelected={value.includes(option.value)}
+            onClick={() => handleOnChange(option.value)}
           >
-            <input
-              {...register}
-              className='hidden'
-              type='radio'
-              id={option.value}
-              value={option.value}
-            />
             <P12>{t(option.label)}</P12>
           </Item>
         ))}

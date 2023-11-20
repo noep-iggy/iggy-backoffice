@@ -1,7 +1,12 @@
 import { AnimalIcon, AvatarUser, Col, P12, P14, Row } from '@/components';
 import { useAuthContext } from '@/contexts';
 import { ROUTES } from '@/routing';
-import { HomeIcon, UserIcon, WrenchScrewdriverIcon } from '@heroicons/react/24/outline';
+import {
+  HomeIcon,
+  ShoppingBagIcon,
+  UserIcon,
+  WrenchScrewdriverIcon,
+} from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/dist/client/router';
 import React from 'react';
@@ -20,36 +25,62 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
 
   return (
     <Main className={className}>
-      <Logo src="logo.png" onClick={() => router.push(ROUTES.home)} />
+      <Logo src='logo.png' onClick={() => router.push(ROUTES.home)} />
       <Separator />
       <Content>
-        <Navigation $selected={ROUTES.houses.list === selected}  onClick={() => router.push(ROUTES.houses.list)}>
+        <Navigation
+          $selected={ROUTES.houses.list === selected}
+          onClick={() => router.push(ROUTES.houses.list)}
+        >
           <LogoNavigation $selected={ROUTES.houses.list === selected}>
             <HomeIcon />
           </LogoNavigation>
           <P14>{t('houses.list.name')}</P14>
         </Navigation>
-        <Navigation $selected={ROUTES.users.list === selected}  onClick={() => router.push(ROUTES.users.list)}>
+        <Navigation
+          $selected={ROUTES.users.list === selected}
+          onClick={() => router.push(ROUTES.users.list)}
+        >
           <LogoNavigation $selected={ROUTES.users.list === selected}>
             <UserIcon />
           </LogoNavigation>
           <P14>{t('users.list.name')}</P14>
         </Navigation>
-        <Navigation $selected={ROUTES.animals.list === selected}  onClick={() => router.push(ROUTES.animals.list)}>
+        <Navigation
+          $selected={ROUTES.animals.list === selected}
+          onClick={() => router.push(ROUTES.animals.list)}
+        >
           <LogoNavigation $selected={ROUTES.animals.list === selected}>
             <AnimalIcon />
           </LogoNavigation>
           <P14>{t('animals.list.name')}</P14>
         </Navigation>
-        <Navigation $selected={ROUTES.tasks.list === selected}  onClick={() => router.push(ROUTES.tasks.list)}>
+        <Navigation
+          $selected={ROUTES.tasks.list === selected}
+          onClick={() => router.push(ROUTES.tasks.list)}
+        >
           <LogoNavigation $selected={ROUTES.tasks.list === selected}>
             <WrenchScrewdriverIcon />
           </LogoNavigation>
           <P14>{t('tasks.list.name')}</P14>
         </Navigation>
+        <Navigation
+          $selected={ROUTES.affiliates.list === selected}
+          onClick={() => router.push(ROUTES.affiliates.list)}
+        >
+          <LogoNavigation $selected={ROUTES.affiliates.list === selected}>
+            <ShoppingBagIcon />
+          </LogoNavigation>
+          <P14>{t('affiliates.list.name')}</P14>
+        </Navigation>
       </Content>
       <Separator />
-      <UserContainer $selected={router.query.slug === currentUser?.id} onClick={()=> currentUser && router.push(ROUTES.users.detail(currentUser.id))}>
+      <UserContainer
+        $selected={router.query.slug === currentUser?.id}
+        onClick={() =>
+          currentUser && router.push(ROUTES.users.detail(currentUser.id))
+        }
+      >
         <AvatarUser user={currentUser} />
         <Col className='ml-2'>
           <P12>{currentUser?.email}</P12>
@@ -101,7 +132,7 @@ const UserContainer = tw.div<{ $selected: boolean }>`
   cursor-pointer
   transition
   duration-300
-  ${(props : { $selected: boolean }) => (props.$selected && 'bg-gray-200')}
+  ${(props: { $selected: boolean }) => props.$selected && 'bg-gray-200'}
 `;
 
 const Logo = tw.img`
@@ -130,7 +161,10 @@ const Navigation = tw.div<{ $selected: boolean }>`
   rounded-md
   transition
   duration-300
-  ${(props : { $selected: boolean }) => (props.$selected ? 'bg-primary shadow-sm text-white' : 'hover:bg-primary-200')}
+  ${(props: { $selected: boolean }) =>
+    props.$selected
+      ? 'bg-primary shadow-sm text-white'
+      : 'hover:bg-primary-200'}
 `;
 
 const LogoNavigation = tw.div<{ $selected: boolean }>`

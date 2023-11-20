@@ -1,0 +1,50 @@
+import { InputNumber, InputNumberProps } from '@/components';
+import { useTranslation } from 'next-i18next';
+import { useState } from 'react';
+import { EditButton, InputCommonEdit, P2Edit } from './InputCommonEdit';
+
+interface InputNumberEditProps extends InputNumberProps {
+  onHandleSubmit: (e: React.MouseEvent) => void;
+}
+
+export function InputNumberEdit(props: InputNumberEditProps): JSX.Element {
+  const { className, label, placeholder, onHandleSubmit, defaultValue } = props;
+  const [isEditing, setIsEditing] = useState(false);
+  const { t } = useTranslation();
+  const [isEllipsisOpen, setIsEllipsisOpen] = useState(false);
+
+  return (
+    <InputCommonEdit
+      isEditing={isEditing}
+      label={label}
+      onHandleSubmit={onHandleSubmit}
+      onEdit={() => setIsEditing(true)}
+      onCancel={() => {
+        setIsEditing(false);
+      }}
+      isAdd={!defaultValue || defaultValue === ''}
+      className={className}
+    >
+      {!isEditing ? (
+        <div className='flex-col'>
+          <P2Edit
+            $isOpen={isEllipsisOpen}
+            $isEmpty={!defaultValue || defaultValue === ''}
+          >
+            {defaultValue && defaultValue !== '' ? defaultValue : placeholder}
+          </P2Edit>
+          {defaultValue && defaultValue.toString()?.length > 130 && (
+            <EditButton
+              className='mt-2 ml-0'
+              onClick={() => setIsEllipsisOpen(!isEllipsisOpen)}
+            >
+              {isEllipsisOpen ? t('generics.seeLess') : t('generics.seeMore')}
+            </EditButton>
+          )}
+        </div>
+      ) : (
+        <InputNumber {...props} />
+      )}
+    </InputCommonEdit>
+  );
+}

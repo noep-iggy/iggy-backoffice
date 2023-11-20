@@ -1,1 +1,2 @@
-export * from './DeleteModal'
+export * from './CreateAffiliateModal';
+export * from './DeleteModal';

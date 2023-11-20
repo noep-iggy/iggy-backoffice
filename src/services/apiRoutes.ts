@@ -1,3 +1,5 @@
+import { AnimalTypeEnum } from '@/types';
+
 export const API_ROUTES = {
   auth: {
     login: '/auth/login',
@@ -38,5 +40,14 @@ export const API_ROUTES = {
     createDefaultAdmin: '/admin/create-default-admin',
     toggleAdminStatus: (userId: string) =>
       `/admin/users/${userId}/toggle-admin-status`,
+  },
+  affiliate: {
+    getAll: '/admin/affiliates',
+    getAllByAnimalType: (animalType: AnimalTypeEnum) =>
+      `/affiliates/type/${animalType}`,
+    getOne: (affiliateId: string) => `/affiliates/${affiliateId}`,
+    createOne: '/admin/affiliates',
+    updateOne: (affiliateId: string) => `/admin/affiliates/${affiliateId}`,
+    deleteOne: (affiliateId: string) => `/admin/affiliates/${affiliateId}`,
   },
 };
