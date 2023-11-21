@@ -16,30 +16,21 @@ export function Footer(props: FooterProps): React.JSX.Element {
     <Main className={className}>
       <InfosContainer>
         <LinkStyled href='mailto:noephilippe29@gmail.com' target='_blank'>
-          {t('noephilippe29@gmail.com')}
-        </LinkStyled>
-        <LinkStyled href='tel:0781533181' target='_blank'>
-          {t('07 81 53 31 81')}
-        </LinkStyled>
-        <LinkStyled
-          href='https://maps.google.com/maps?q=172+avenue+winston+churchill+rennes'
-          target='_blank'
-        >
-          {t('16 avenue des Lilas - 35000 Rennes')}
+          {t('iggyapp@gmail.com')}
         </LinkStyled>
       </InfosContainer>
       <SocialMediasContainer>
-        <SocialLogo network='facebook' />
-        <SocialLogo network='instagram' />
-        <SocialLogo network='twitter' />
-        <SocialLogo network='linkedin' />
+        <SocialLogo
+          url='https://www.facebook.com/Iggyapp'
+          target='_blank'
+          network='facebook'
+        />
+        <SocialLogo
+          url='https://www.instagram.com/iggy_app/'
+          target='_blank'
+          network='instagram'
+        />
       </SocialMediasContainer>
-      <CopyRight>
-        {t('generics.designed')}
-        <LinkStyled href='https://noe-philippe.com' target='_blank'>
-          {'Noé PHILIPPE'}
-        </LinkStyled>
-      </CopyRight>
       <CopyRight>{t('generics.copyright')}</CopyRight>
     </Main>
   );

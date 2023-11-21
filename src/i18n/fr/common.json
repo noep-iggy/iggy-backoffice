@@ -1,7 +1,7 @@
 {
   "langage": "fr",
   "generics": {
-    "copyright": "Copyright © 2023 - Starter-template - Tous droits réservés",
+    "copyright": "Copyright © 2023 - Iggy Backoffice - Tous droits réservés",
     "designed": "Conçu et développé par ",
     "logout": "Déconnexion",
     "register": "Créer un compte",
@@ -14,7 +14,9 @@
     "add": "Ajouter",
     "search": "Rechercher",
     "delete": "Supprimer",
-    "empty": "Aucune donnée"
+    "empty": "Aucune donnée",
+    "seeLess": "Voir moins",
+    "seeMore": "Voir plus"
   },
   "home": {
     "name": "home",
@@ -27,6 +29,7 @@
       "name": "Maisons",
       "title": "Liste des maisons",
       "search": "Rechercher une maison",
+      "noResult": "Aucune maison trouvée",
       "table": {
         "name": "Nom",
         "users": "Utilisateurs",
@@ -44,7 +47,8 @@
         "animals": "Animaux",
         "createAt": "Créé le",
         "updateAt": "Mis à jour le",
-        "id": "ID"
+        "id": "ID",
+        "billingPlan": "Abonnement"
       },
       "actions": "Actions",
       "delete": {
@@ -59,6 +63,7 @@
       "name": "Utilisateurs",
       "title": "Liste des utilisateurs",
       "search": "Rechercher un utilisateur",
+      "noResult": "Aucun utilisateur trouvé",
       "table": {
         "firstName": "Prénom",
         "lastName": "Nom",
@@ -92,6 +97,38 @@
         "remove": "Retirer",
         "ifAdd": "Si vous ajoutez le rôle d'administrateur à cet utilisateur, il pourra gérer toute l'application",
         "ifRemove": "Si vous retirez le rôle d'administrateur à cet utilisateur, il ne pourra plus gérer l'application"
+      },
+      "logout": {
+        "title": "Déconnecter l'utilisateur",
+        "ifLogout": "Si vous déconnectez cet utilisateur, il devra se reconnecter pour accéder à l'application"
+      }
+    }
+  },
+  "billingPlans": {
+    "list": {
+      "name": "Abonnements",
+      "title": "Liste des abonnements",
+      "noResult": "Aucun abonnement trouvé",
+      "table": {
+        "title": "Titre",
+        "price": "Prix",
+        "type": "Type"
+      }
+    },
+    "detail": {
+      "name": "Abonnement",
+      "title": "Détail de l'abonnement",
+      "actions": "Actions",
+      "general": {
+        "title": "Informations générales",
+        "createAt": "Créé le",
+        "updateAt": "Mis à jour le",
+        "id": "ID"
+      },
+      "delete": {
+        "title": "Supprimer l'abonnement",
+        "content": "Êtes-vous sûr de vouloir supprimer cet abonnement ?",
+        "ifDelete": "Si vous supprimez cet abonnement, il ne sera plus disponible pour les utilisateurs et les animaux associés"
       }
     }
   },
@@ -100,6 +137,7 @@
       "name": "Affiliations",
       "title": "Liste des affiliations",
       "search": "Rechercher une affiliation",
+      "noResult": "Aucune affiliation trouvée",
       "animalType": "Type d'animal",
       "table": {
         "title": "Titre",
@@ -134,6 +172,7 @@
       "name": "Animaux",
       "title": "Liste des animaux",
       "search": "Rechercher un animal",
+      "noResult": "Aucun animal trouvé",
       "table": {
         "name": "Nom",
         "gender": "Genre",
@@ -165,6 +204,7 @@
       "name": "Tâches",
       "title": "Liste des tâches",
       "search": "Rechercher une tâche",
+      "noResult": "Aucune tâche trouvée",
       "houseId": "Entrer l'ID de la maison",
       "table": {
         "title": "Titre",
@@ -209,7 +249,7 @@
     "status": {
       "TODO": "A faire",
       "DONE": "Terminé",
-      "TO_VALIDATE": "A valider",
+      "TO_VALIDATE": "À valider",
       "ARCHIVED": "Archivé",
       "SLEEPING": "En sommeil",
       "HAPPY": "Heureux",
@@ -229,8 +269,8 @@
       "FEMININE": "Femelle"
     },
     "billingPlan": {
-      "FREE": "Gratuit",
-      "PREMIUM": "Premium"
+      "MONTHLY": "Mensuel",
+      "FOR_LIFE": "A vie"
     }
   },
   "fields": {
@@ -429,7 +469,8 @@
         "userNotAdmin": "L'utilisateur n'est pas administrateur"
       },
       "file": {
-        "undefined": "Le fichier n'est pas trouvé"
+        "undefined": "Le fichier n'est pas trouvé",
+        "invalidFormat": "Le fichier n'est pas au bon format"
       }
     }
   }

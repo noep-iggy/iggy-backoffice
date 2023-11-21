@@ -5,16 +5,25 @@ import { EditButton, InputCommonEdit, P2Edit } from './InputCommonEdit';
 
 interface InputNumberEditProps extends InputNumberProps {
   onHandleSubmit: (e: React.MouseEvent) => void;
+  isLoading?: boolean;
 }
 
 export function InputNumberEdit(props: InputNumberEditProps): JSX.Element {
-  const { className, label, placeholder, onHandleSubmit, defaultValue } = props;
+  const {
+    className,
+    label,
+    placeholder,
+    isLoading,
+    onHandleSubmit,
+    defaultValue,
+  } = props;
   const [isEditing, setIsEditing] = useState(false);
   const { t } = useTranslation();
   const [isEllipsisOpen, setIsEllipsisOpen] = useState(false);
 
   return (
     <InputCommonEdit
+      isLoading={isLoading}
       isEditing={isEditing}
       label={label}
       onHandleSubmit={onHandleSubmit}

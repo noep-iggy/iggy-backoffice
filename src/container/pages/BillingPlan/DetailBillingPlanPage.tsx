@@ -3,8 +3,6 @@ import {
   Col,
   ErrorMessage,
   InputEdit,
-  InputEnumMultipleEdit,
-  InputImageEdit,
   InputMultilineEdit,
   InputNumberEdit,
   Layout,
@@ -29,8 +27,13 @@ import {
   formatValidationErrorMessage,
 } from '@/services/error';
 import { formatDate } from '@/services/utils';
-import { AffiliateDto, AnimalTypeEnum, UpdateAffiliateApi } from '@/types';
-import { affiliateValidation } from '@/validations';
+import {
+  BillingPlanDto,
+  BillingPlanTypeEnum,
+  UpdateAffiliateApi,
+  UpdateBillingPlanApi,
+} from '@/types';
+import { billingPlanValidation } from '@/validations';
 import { ArrowLeftIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'next-i18next';
@@ -38,51 +41,47 @@ import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-interface DetailAffiliatePageProps {
-  idPage: string;
+interface DetailBillingPlanPageProps {
+  type: BillingPlanTypeEnum;
 }
 
-export function DetailAffiliatePage(
-  props: DetailAffiliatePageProps
+export function DetailBillingPlanPage(
+  props: DetailBillingPlanPageProps
 ): React.JSX.Element {
-  const { idPage } = props;
+  const { type } = props;
   const { t } = useTranslation();
-  const [affiliate, setAffiliate] = useState<AffiliateDto>();
+  const [billingPlan, setBillingPlan] = useState<BillingPlanDto>();
   const [errorApi, setErrorApi] = useState<string>('');
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+
   const {
     handleSubmit,
     formState: { errors },
     setError,
-    setValue,
     register,
     watch,
-  } = useForm<UpdateAffiliateApi>({
-    resolver: yupResolver(affiliateValidation.update),
+  } = useForm<UpdateBillingPlanApi>({
+    resolver: yupResolver(billingPlanValidation.update),
     values: {
-      title: affiliate?.title,
-      description: affiliate?.description,
-      brand: affiliate?.brand,
-      animals: affiliate?.animals,
-      basePrice: affiliate?.basePrice,
-      discountPrice: affiliate?.discountPrice,
-      url: affiliate?.url,
+      title: billingPlan?.title,
+      description: billingPlan?.description,
+      price: billingPlan?.price,
     },
   });
 
-  async function fetchAffiliate() {
-    const affiliate = await ApiService.affiliates.getOne(idPage);
-    setAffiliate(affiliate);
+  async function fetchBillingPlan() {
+    const billingPlan = await ApiService.billingPlans.getOneByType(type);
+    setBillingPlan(billingPlan);
   }
 
   useEffect(() => {
-    fetchAffiliate();
+    fetchBillingPlan();
   }, []);
 
   async function onSubmit(data: UpdateAffiliateApi) {
     try {
-      if (!affiliate) return;
-      await ApiService.affiliates.updateOne(affiliate.id, {
+      if (!billingPlan) return;
+      await ApiService.billingPlans.updateOneByType(billingPlan.type, {
         ...data,
       });
       router.reload();
@@ -94,28 +93,18 @@ export function DetailAffiliatePage(
   }
 
   return (
-    <Layout selected={ROUTES.affiliates.list}>
-      <BackDetailPage onClick={() => router.push(ROUTES.affiliates.list)}>
+    <Layout selected={ROUTES.billingPlans.list}>
+      <BackDetailPage onClick={() => router.push(ROUTES.billingPlans.list)}>
         <ArrowLeftIcon className='w-4 mr-1' />
         <LabelRowInfosDetailPage>{t('generics.back')}</LabelRowInfosDetailPage>
       </BackDetailPage>
       <DetailPage>
         <TitleDetailPage className='mt-5'>
-          {t('affiliates.detail.title')}
+          {t('billingPlans.detail.title')}
         </TitleDetailPage>
-        {affiliate ? (
+        {billingPlan ? (
           <>
             <FormDetailPage onSubmit={handleSubmit(onSubmit)}>
-              <InputImageEdit
-                label={t('fields.image.label')}
-                value={affiliate.image}
-                onHandleSubmit={handleSubmit(onSubmit)}
-                error={errors.image?.message}
-                placeholder={t('fields.image.placeholder')}
-                onChange={(value) => {
-                  setValue('image', value.id);
-                }}
-              />
               <InputEdit
                 label={t('fields.title.label')}
                 value={watch('title')}
@@ -123,73 +112,30 @@ export function DetailAffiliatePage(
                 error={errors.title?.message}
                 placeholder={t('fields.title.placeholder')}
                 register={register('title')}
-                defaultValue={affiliate.title}
+                defaultValue={billingPlan.title}
               />
               <InputMultilineEdit
                 value={watch('description')}
                 label={t('fields.description.label')}
-                defaultValue={affiliate.description}
+                defaultValue={billingPlan.description}
                 register={register('description')}
                 placeholder={t('fields.description.placeholder')}
                 onHandleSubmit={handleSubmit(onSubmit)}
                 error={errors.description?.message}
               />
-              <InputEdit
-                value={watch('brand')}
-                label={t('fields.brand.label')}
-                defaultValue={affiliate.brand}
-                register={register('brand')}
-                placeholder={t('fields.brand.placeholder')}
-                onHandleSubmit={handleSubmit(onSubmit)}
-                error={errors.brand?.message}
-              />
-              <InputEdit
-                value={watch('url')}
-                label={t('fields.url.label')}
-                defaultValue={affiliate.url}
-                register={register('url')}
-                placeholder={t('fields.url.placeholder')}
-                onHandleSubmit={handleSubmit(onSubmit)}
-                error={errors.url?.message}
-              />
-              <InputEnumMultipleEdit
-                value={watch('animals') as unknown as string[]}
-                options={Object.values(AnimalTypeEnum).map((v) => {
-                  return {
-                    label: `enums.type.${v}`,
-                    value: v,
-                  };
-                })}
-                onChange={(v) => setValue('animals', v as AnimalTypeEnum[])}
-                label={t('fields.animals.label')}
-                defaultValue={affiliate.animals}
-                register={register('animals')}
-                onHandleSubmit={handleSubmit(onSubmit)}
-                error={errors.animals?.message}
-                placeholder='fields.animals.placeholder'
-              />
+
               <InputNumberEdit
-                value={watch('basePrice') as unknown as string}
-                label={t('fields.basePrice.label')}
-                defaultValue={affiliate.basePrice + '€'}
-                register={register('basePrice')}
-                placeholder={t('fields.basePrice.placeholder')}
-                error={errors.basePrice?.message}
+                value={watch('price') as unknown as string}
+                label={t('fields.price.label')}
+                defaultValue={billingPlan.price + '€'}
+                register={register('price')}
+                placeholder={t('fields.price.placeholder')}
+                error={errors.price?.message}
                 step={0.1}
                 min={0}
                 onHandleSubmit={handleSubmit(onSubmit)}
               />
-              <InputNumberEdit
-                value={watch('discountPrice') as unknown as string}
-                label={t('fields.discountPrice.label')}
-                defaultValue={affiliate.discountPrice + '€'}
-                register={register('discountPrice')}
-                placeholder={t('fields.discountPrice.placeholder')}
-                error={errors.discountPrice?.message}
-                step={0.1}
-                min={0}
-                onHandleSubmit={handleSubmit(onSubmit)}
-              />
+
               {errorApi && (
                 <ErrorMessage className='mt-0.5 w-full' icon>
                   {errorApi}
@@ -197,43 +143,45 @@ export function DetailAffiliatePage(
               )}
             </FormDetailPage>
             <TitleDetailPage>
-              {t('affiliates.detail.general.title')}
+              {t('billingPlans.detail.general.title')}
             </TitleDetailPage>
             <InfosDetailPage>
               <RowInfosDetailPage>
                 <LabelRowInfosDetailPage>
-                  {t('affiliates.detail.general.id')}
+                  {t('billingPlans.detail.general.id')}
                 </LabelRowInfosDetailPage>
                 <ValueRowInfosDetailPage>
-                  {affiliate.id}
+                  {billingPlan.id}
                 </ValueRowInfosDetailPage>
               </RowInfosDetailPage>
               <RowInfosDetailPage>
                 <LabelRowInfosDetailPage>
-                  {t('affiliates.detail.general.createAt')}
+                  {t('billingPlans.detail.general.createAt')}
                 </LabelRowInfosDetailPage>
                 <ValueRowInfosDetailPage>
-                  {formatDate(affiliate.createdAt)}
+                  {formatDate(billingPlan.createdAt)}
                 </ValueRowInfosDetailPage>
               </RowInfosDetailPage>
               <RowInfosDetailPage>
                 <LabelRowInfosDetailPage>
-                  {t('affiliates.detail.general.updateAt')}
+                  {t('billingPlans.detail.general.updateAt')}
                 </LabelRowInfosDetailPage>
                 <ValueRowInfosDetailPage>
-                  {formatDate(affiliate.updatedAt)}
+                  {formatDate(billingPlan.updatedAt)}
                 </ValueRowInfosDetailPage>
               </RowInfosDetailPage>
             </InfosDetailPage>
-            <TitleDetailPage>{t('affiliates.detail.actions')}</TitleDetailPage>
+            <TitleDetailPage>
+              {t('billingPlans.detail.actions')}
+            </TitleDetailPage>
             <InfosDetailPage className='border-red-300'>
               <RowInfosDetailPage>
                 <Col className='w-1/2'>
                   <LabelRowInfosDetailPage>
-                    {t('affiliates.detail.delete.title')}
+                    {t('billingPlans.detail.delete.title')}
                   </LabelRowInfosDetailPage>
                   <ValueRowInfosDetailPage className='mt-1'>
-                    {t('affiliates.detail.delete.ifDelete')}
+                    {t('billingPlans.detail.delete.ifDelete')}
                   </ValueRowInfosDetailPage>
                 </Col>
                 <ButtonDeleteDetailPage
@@ -253,12 +201,12 @@ export function DetailAffiliatePage(
       <DeleteModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        description={t('affiliates.detail.delete.content')}
-        name={`${affiliate?.title}` ?? ''}
+        description={t('billingPlans.detail.delete.content')}
+        name={`${billingPlan?.title}` ?? ''}
         onDelete={async () => {
-          if (!affiliate) return;
-          await ApiService.affiliates.deleteOne(affiliate.id);
-          router.push(ROUTES.affiliates.list);
+          if (!billingPlan) return;
+          await ApiService.billingPlans.deleteOneByType(billingPlan.type);
+          router.push(ROUTES.billingPlans.list);
         }}
       />
     </Layout>

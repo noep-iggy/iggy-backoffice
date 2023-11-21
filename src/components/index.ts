@@ -12,6 +12,7 @@ export * from './Layout';
 export * from './Loaders';
 export * from './Medias';
 export * from './Modal';
+export * from './Pagination';
 export * from './ProgressBar';
 export * from './Swiper';
 export * from './Texts';

@@ -1,3 +1,5 @@
+import { BillingPlanTypeEnum } from '@/types';
+
 export const ROUTES = {
   home: '/',
   houses: {
@@ -19,6 +21,11 @@ export const ROUTES = {
   affiliates: {
     list: '/affiliates',
     detail: (affiliateId: string) => `/affiliates/${affiliateId}`,
+  },
+  billingPlans: {
+    list: '/billing-plans',
+    detail: (billingPlanType: BillingPlanTypeEnum) =>
+      `/billing-plans/${billingPlanType}`,
   },
   auth: {
     login: '/login',

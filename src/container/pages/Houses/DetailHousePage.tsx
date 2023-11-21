@@ -197,6 +197,18 @@ export function DetailHousePage(
                     : t('generics.empty')}
                 </ValueRowInfosDetailPage>
               </RowInfosDetailPage>
+              <RowInfosDetailPage
+                onClick={() =>
+                  router.push(ROUTES.billingPlans.detail(house.billingPlan))
+                }
+              >
+                <LabelRowInfosDetailPage>
+                  {t('houses.detail.general.billingPlan')}
+                </LabelRowInfosDetailPage>
+                <ValueRowInfosDetailPage className={'underline cursor-pointer'}>
+                  {t(`enums.billingPlan.${house.billingPlan}`)}
+                </ValueRowInfosDetailPage>
+              </RowInfosDetailPage>
             </InfosDetailPage>
             <TitleDetailPage>{t('houses.detail.actions')}</TitleDetailPage>
             <InfosDetailPage className='border-red-300'>

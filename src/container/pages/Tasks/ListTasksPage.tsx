@@ -5,9 +5,8 @@ import {
   Input,
   Layout,
   Loader,
-  P18,
+  Pagination,
   Row,
-  RowCenter,
   TableHeader,
   TableHeaderItem,
   TableRow,
@@ -15,17 +14,10 @@ import {
 import { ROUTES } from '@/routing';
 import { ApiService } from '@/services/api';
 import { AnimalDto, TaskDto, UserDto } from '@/types';
-import {
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MagnifyingGlassIcon,
-} from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
 import router from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import tw from 'tailwind-styled-components';
 
 export function ListTasksPage(): React.JSX.Element {
   const [tasks, setTasks] = useState<TaskDto[]>([]);
@@ -35,9 +27,11 @@ export function ListTasksPage(): React.JSX.Element {
   const [page, setPage] = useState<number>(0);
   const [rowTableHover, setRowTableHover] = useState<string>();
   const [houseId, setHouseId] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { t } = useTranslation();
 
   async function fetchTasks() {
+    setIsLoading(true);
     const filters = {
       orderType,
       orderBy,
@@ -52,8 +46,8 @@ export function ListTasksPage(): React.JSX.Element {
     if (fetchedTasks.length === 0 && page > 0) {
       setPage(page - 1);
     }
-    console.log('[D] ListTasksPage', fetchedTasks);
     setTasks(fetchedTasks);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -144,7 +138,8 @@ export function ListTasksPage(): React.JSX.Element {
           />
         </TableHeaderItem>
       </TableHeader>
-      {tasks.length > 0 ? (
+      {tasks.length > 0 &&
+        !isLoading &&
         tasks.map((task: TaskDto) => (
           <TableRow
             className={nbColumns}
@@ -181,10 +176,10 @@ export function ListTasksPage(): React.JSX.Element {
               {t(`enums.status.${task.status}`)}
             </Cellule>
           </TableRow>
-        ))
-      ) : (
+        ))}
+      {isLoading && (
         <TableRow className={nbColumns}>
-          {Array(4)
+          {Array(5)
             .fill(null)
             .map((e) => (
               <Cellule key={e}>
@@ -193,49 +188,12 @@ export function ListTasksPage(): React.JSX.Element {
             ))}
         </TableRow>
       )}
-      <RowCenter className='justify-center w-full mt-5'>
-        <Icon
-          className='mr-2'
-          $disabled={page < 5}
-          onClick={() => page >= 5 && setPage(page - 5)}
-        >
-          <ChevronDoubleLeftIcon />
-        </Icon>
-        <Icon
-          className='ml-2'
-          $disabled={page < 1}
-          onClick={() => page >= 1 && setPage(page - 1)}
-        >
-          <ChevronLeftIcon />
-        </Icon>
-        <CurrentPage>{page + 1}</CurrentPage>
-        <Icon className='mr-2' onClick={() => setPage(page + 1)}>
-          <ChevronRightIcon />
-        </Icon>
-        <Icon className='ml-2' onClick={() => setPage(page + 5)}>
-          <ChevronDoubleRightIcon />
-        </Icon>
-      </RowCenter>
+      {tasks.length === 0 && !isLoading && (
+        <TableRow className={nbColumns}>
+          <Cellule>{t('tasks.list.noResult')}</Cellule>
+        </TableRow>
+      )}
+      <Pagination page={page} setPage={setPage} className='mt-5' />
     </Layout>
   );
 }
-
-const CurrentPage = tw(P18)`
-  mx-2
-  px-2
-  text-gray-800
-  cursor-default
-`;
-
-const Icon = tw.div<{ $disabled?: boolean }>`
-  w-5
-  h-5
-  cursor-pointer
-  transition
-  duration-200
-  ease-in-out
-  ${({ $disabled }) =>
-    $disabled
-      ? 'text-gray-300 cursor-not-allowed'
-      : 'text-gray-800 hover:text-gray-900'}
-`;

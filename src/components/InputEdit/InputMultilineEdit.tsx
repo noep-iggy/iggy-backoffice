@@ -1,20 +1,24 @@
-/* eslint-disable indent */
-import { InputEnumMulitple, InputEnumMulitpleProps } from '@/components';
+import { InputMultiline, InputMultilineProps } from '@/components';
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
 import { EditButton, InputCommonEdit, P2Edit } from './InputCommonEdit';
 
-interface InputEnumMultipleEditProps extends InputEnumMulitpleProps {
+interface InputMultilineEditProps extends InputMultilineProps {
   onHandleSubmit: (e: React.MouseEvent) => void;
-  register?: UseFormRegisterReturn;
   isLoading?: boolean;
 }
 
-export function InputEnumMultipleEdit(
-  props: InputEnumMultipleEditProps
+export function InputMultilineEdit(
+  props: InputMultilineEditProps
 ): JSX.Element {
-  const { className, label, placeholder,isLoading, onHandleSubmit, defaultValue } = props;
+  const {
+    className,
+    label,
+    placeholder,
+    isLoading,
+    onHandleSubmit,
+    defaultValue,
+  } = props;
   const [isEditing, setIsEditing] = useState(false);
   const { t } = useTranslation();
   const [isEllipsisOpen, setIsEllipsisOpen] = useState(false);
@@ -38,11 +42,7 @@ export function InputEnumMultipleEdit(
             $isOpen={isEllipsisOpen}
             $isEmpty={!defaultValue || defaultValue === ''}
           >
-            {Array.isArray(defaultValue)
-              ? defaultValue
-                  .map((value: string) => t(`enums.type.${value}`))
-                  .join(', ')
-              : placeholder}
+            {defaultValue && defaultValue !== '' ? defaultValue : placeholder}
           </P2Edit>
           {defaultValue && defaultValue.toString()?.length > 130 && (
             <EditButton
@@ -54,7 +54,7 @@ export function InputEnumMultipleEdit(
           )}
         </div>
       ) : (
-        <InputEnumMulitple {...props} />
+        <InputMultiline {...props} />
       )}
     </InputCommonEdit>
   );

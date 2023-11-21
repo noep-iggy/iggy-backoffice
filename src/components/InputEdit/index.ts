@@ -3,4 +3,5 @@ export * from './InputEditPassword';
 export * from './InputEnumEdit';
 export * from './InputEnumMultipleEdit';
 export * from './InputImageEdit';
+export * from './InputMultilineEdit';
 export * from './InputNumberEdit';

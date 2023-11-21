@@ -9,7 +9,7 @@ export function ButtonLoader(props: ButtonLoaderProps): React.JSX.Element {
   const { loaderClassName } = props;
   return (
     <LoaderContainer>
-      <Loader className={loaderClassName} />
+      <Loader className={`${loaderClassName} fill-primary-600`} />
     </LoaderContainer>
   );
 }

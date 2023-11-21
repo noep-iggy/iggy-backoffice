@@ -36,6 +36,7 @@ const Content = tw.div`
   w-[calc(100vw-14rem)]
   mr-[1rem]
   mt-[1rem]
+
 `;
 
 const Page = tw.div`

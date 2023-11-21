@@ -1,9 +1,9 @@
+import { ButtonGhost, ButtonPrimary } from '@/components/Button';
 import { useTranslation } from 'next-i18next';
 import { ReactNode } from 'react';
 import tw from 'tailwind-styled-components';
 import { LabelStyled } from '../Inputs/InputCommon';
 import { P10, P12 } from '../Texts';
-import { ButtonGhost, ButtonPrimary } from '@/components/Button';
 
 export interface InputCommonEditProps {
   className?: string;
@@ -14,6 +14,7 @@ export interface InputCommonEditProps {
   isAdd: boolean;
   onCancel: () => void;
   onEdit: () => void;
+  isLoading?: boolean;
 }
 
 export function InputCommonEdit(props: InputCommonEditProps): JSX.Element {
@@ -26,6 +27,7 @@ export function InputCommonEdit(props: InputCommonEditProps): JSX.Element {
     onCancel,
     onEdit,
     isEditing,
+    isLoading,
   } = props;
   const { t } = useTranslation();
 
@@ -39,7 +41,11 @@ export function InputCommonEdit(props: InputCommonEditProps): JSX.Element {
             <CancelButton onClick={onCancel}>
               {t('generics.cancel')}
             </CancelButton>
-            <ButtonSubmit onClick={onHandleSubmit} type='submit'>
+            <ButtonSubmit
+              isLoading={isLoading}
+              onClick={onHandleSubmit}
+              type='submit'
+            >
               {t('generics.update')}
             </ButtonSubmit>
           </ButtonContainer>

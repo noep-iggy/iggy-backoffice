@@ -4,6 +4,7 @@ import {
   Input,
   InputEnumMulitple,
   InputImage,
+  InputMultiline,
   InputNumber,
   Modal,
 } from '@/components';
@@ -32,6 +33,7 @@ export function CreateAffiliateModal(
   const { isOpen, onClose } = props;
   const { t } = useTranslation();
   const [errorApi, setErrorApi] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     handleSubmit,
@@ -49,7 +51,9 @@ export function CreateAffiliateModal(
 
   async function onSubmit(data: CreateAffiliateApi) {
     try {
+      setIsLoading(true);
       await ApiService.affiliates.createOne(data);
+      setIsLoading(false);
       router.reload();
       //eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -63,7 +67,7 @@ export function CreateAffiliateModal(
       isOpen={isOpen}
       onRequestClose={onClose}
       title={t('affiliates.create.title')}
-      contentClassName='w-[calc(42rem)]'
+      contentClassName='w-[calc(42rem)] h-150'
     >
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputImage
@@ -80,7 +84,7 @@ export function CreateAffiliateModal(
           placeholder={t('fields.title.placeholder')}
           register={register('title')}
         />
-        <Input
+        <InputMultiline
           value={watch('description')}
           label={t('fields.description.label')}
           register={register('description')}
@@ -131,7 +135,7 @@ export function CreateAffiliateModal(
           step={0.1}
           min={0}
         />
-        <ButtonPrimary type='submit' className='mt-4'>
+        <ButtonPrimary isLoading={isLoading} type='submit' className='my-4'>
           {t('affiliates.create.title')}
         </ButtonPrimary>
         {errorApi && (

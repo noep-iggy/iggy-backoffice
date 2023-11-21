@@ -1,19 +1,26 @@
-import { ButtonPrimary, Card, ErrorMessage, H4, Input, InputPassword } from '@/components';
+import {
+  ButtonPrimary,
+  Card,
+  ErrorMessage,
+  H4,
+  Input,
+  InputPassword,
+} from '@/components';
 import { useAuthContext } from '@/contexts';
 import { ROUTES } from '@/routing';
-import { useTranslation } from 'next-i18next';
-import router from 'next/router';
-import React, { useEffect, useState } from 'react';
-import tw from 'tailwind-styled-components';
-import { useForm } from 'react-hook-form';
+import { ApiService } from '@/services/api';
 import {
   formatApiErrorMessage,
   formatValidationErrorMessage,
 } from '@/services/error';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { AuthLoginApi } from '@/types';
 import { userValidation } from '@/validations';
-import { ApiService } from '@/services/api';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslation } from 'next-i18next';
+import router from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import tw from 'tailwind-styled-components';
 
 export default function LoginPage(): React.JSX.Element {
   const { t } = useTranslation();

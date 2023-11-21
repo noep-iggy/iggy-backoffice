@@ -2,6 +2,7 @@ import { AnimalIcon, AvatarUser, Col, P12, P14, Row } from '@/components';
 import { useAuthContext } from '@/contexts';
 import { ROUTES } from '@/routing';
 import {
+  CurrencyEuroIcon,
   HomeIcon,
   ShoppingBagIcon,
   UserIcon,
@@ -73,6 +74,15 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
           </LogoNavigation>
           <P14>{t('affiliates.list.name')}</P14>
         </Navigation>
+        <Navigation
+          $selected={ROUTES.billingPlans.list === selected}
+          onClick={() => router.push(ROUTES.billingPlans.list)}
+        >
+          <LogoNavigation $selected={ROUTES.billingPlans.list === selected}>
+            <CurrencyEuroIcon />
+          </LogoNavigation>
+          <P14>{t('billingPlans.list.name')}</P14>
+        </Navigation>
       </Content>
       <Separator />
       <UserContainer
@@ -81,7 +91,7 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
           currentUser && router.push(ROUTES.users.detail(currentUser.id))
         }
       >
-        <AvatarUser user={currentUser} />
+        <AvatarUser className='border border-white' user={currentUser} />
         <Col className='ml-2'>
           <P12>{currentUser?.email}</P12>
           <Row className=''>
@@ -108,6 +118,7 @@ const Main = tw.div`
   shadow-md
   rounded-md
   fixed
+  overflow-hidden
 `;
 
 const Content = tw.div`
@@ -128,11 +139,12 @@ const UserContainer = tw.div<{ $selected: boolean }>`
   w-full
   px-2
   py-3
-  hover:bg-gray-200
+  hover:bg-primary-200
   cursor-pointer
   transition
   duration-300
-  ${(props: { $selected: boolean }) => props.$selected && 'bg-gray-200'}
+  ${(props: { $selected: boolean }) =>
+    props.$selected && 'bg-primary text-white hover:bg-primary'}
 `;
 
 const Logo = tw.img`

@@ -1,15 +1,16 @@
 /* eslint-disable indent */
+import { ApiService } from '@/services/api';
+import { formatApiErrorMessage } from '@/services/error';
+import { MediaDto } from '@/types';
+import { PlusIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 import tw from 'tailwind-styled-components';
-import { MediaDto } from '@web-template/types';
 import { ErrorMessage } from '../ErrorMessage';
+import { Loader } from '../Loaders';
 import { P12 } from '../Texts';
 import { LabelStyled } from './InputCommon';
-import { PlusIcon } from '@heroicons/react/24/outline';
-import { ApiService } from '@/services/api/userService';
-import { formatApiErrorMessage } from '@/services/error';
-import { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface InputImageProps
   extends Omit<React.HTMLProps<HTMLInputElement>, 'value' | 'onChange'> {
@@ -35,7 +36,7 @@ export function InputImage(props: InputImageProps): JSX.Element {
   } = props;
   const { t } = useTranslation();
   const [errorMessage, setErrorMessage] = useState('');
-  const [, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [media, setMedia] = useState<MediaDto | null>(value ?? null);
   const [inputHover, setInputHover] = useState(false);
 
@@ -65,10 +66,13 @@ export function InputImage(props: InputImageProps): JSX.Element {
   async function onImageUpload(file: File) {
     try {
       setIsLoading(true);
-      const fileUpload = await ApiService.media.upload(file);
+      const fileUpload = await ApiService.medias.fileUpload(file);
+
       setMedia(fileUpload);
       onChange?.(fileUpload);
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setErrorMessage(formatApiErrorMessage(e?.data?.message, t));
@@ -95,14 +99,20 @@ export function InputImage(props: InputImageProps): JSX.Element {
         onClick={handleUploadClick}
         className={classNameInput}
       >
-        {media ? (
+        {media && !isLoading ? (
           <Image src={media.url} alt={media?.filename} />
         ) : (
           <ChooseFile>
-            <PlusIcon className='w-5 text-gray-400' />
-            <P12 className='text-center text-gray-400'>
-              {placeholder ?? t('fields.generics.chooseImage')}
-            </P12>
+            {!isLoading ? (
+              <>
+                <PlusIcon className='w-5 text-gray-400' />
+                <P12 className='text-center text-gray-400'>
+                  {placeholder ?? t('fields.generics.chooseImage')}
+                </P12>
+              </>
+            ) : (
+              <Loader className='text-white' size={7} />
+            )}
           </ChooseFile>
         )}
         {inputHover && (
@@ -142,7 +152,7 @@ const Container = tw.div`
 `;
 
 const AddImage = tw.a`
-    relative
+  relative
   overflow-hidden
   flex
   items-center

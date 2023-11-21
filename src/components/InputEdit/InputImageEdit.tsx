@@ -1,32 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { InputCommonEdit, P2Edit } from './InputCommonEdit';
 import { InputImage, InputImageProps } from '../Inputs';
-import { MediaDto } from '@/types';
+import { InputCommonEdit, P2Edit } from './InputCommonEdit';
 
 interface InputImageEditProps extends InputImageProps {
   onHandleSubmit: (e: React.MouseEvent) => void;
+  isLoading?: boolean;
 }
 
 export function InputImageEdit(props: InputImageEditProps): JSX.Element {
-  const { className, label, value, onHandleSubmit, register, placeholder } =
+  const { className, label, value, isLoading, onHandleSubmit, placeholder } =
     props;
   const [isEditing, setIsEditing] = useState(false);
-  const [newImage, setNewImage] = useState<MediaDto>();
-
-  useEffect(() => {
-    if (newImage) {
-      register?.onChange({
-        target: {
-          name: register.name,
-          value: newImage.id,
-        },
-      });
-    }
-  }, [newImage]);
 
   return (
     <InputCommonEdit
+      isLoading={isLoading}
       isEditing={isEditing}
       label={label}
       onHandleSubmit={onHandleSubmit}
@@ -46,7 +35,7 @@ export function InputImageEdit(props: InputImageEditProps): JSX.Element {
           )}
         </P2Edit>
       ) : (
-        <InputImage name='profilePicture' onChange={setNewImage} {...props} />
+        <InputImage {...props} />
       )}
     </InputCommonEdit>
   );

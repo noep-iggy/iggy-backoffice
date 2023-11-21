@@ -1,4 +1,4 @@
-import { AnimalTypeEnum } from '@/types';
+import { AnimalTypeEnum, BillingPlanTypeEnum } from '@/types';
 
 export const API_ROUTES = {
   auth: {
@@ -49,5 +49,17 @@ export const API_ROUTES = {
     createOne: '/admin/affiliates',
     updateOne: (affiliateId: string) => `/admin/affiliates/${affiliateId}`,
     deleteOne: (affiliateId: string) => `/admin/affiliates/${affiliateId}`,
+  },
+  billingPlan: {
+    getAll: '/billing-plans',
+    getOneByType: (type: BillingPlanTypeEnum) => `/billing-plans/${type}`,
+    createOne: '/admin/billing-plans',
+    updateOneByType: (type: BillingPlanTypeEnum) =>
+      `/admin/billing-plans/${type}`,
+    deleteOneByType: (type: BillingPlanTypeEnum) =>
+      `/admin/billing-plans/${type}`,
+  },
+  media: {
+    upload: '/file-upload',
   },
 };
