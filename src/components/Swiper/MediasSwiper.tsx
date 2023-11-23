@@ -73,12 +73,7 @@ export function MediasSwiper(props: MediasSwiperProps): JSX.Element {
             <SwiperSlide key={media} onClick={() => setHideArrows(!hideArrows)}>
               <ImageContainer>
                 <ImageStyled>
-                  <Image
-                    layout='fill'
-                    objectFit='contain'
-                    src={media}
-                    alt={media}
-                  />
+                  <Image src={media} alt={media} />
                 </ImageStyled>
               </ImageContainer>
             </SwiperSlide>

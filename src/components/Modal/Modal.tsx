@@ -1,17 +1,17 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import ReactModal from 'react-modal';
 import tw from 'tailwind-styled-components';
 import { RowBetween } from '../Helpers';
 import { P14 } from '../Texts';
 
-interface ModalProps extends ReactModal.Props {
-  children?: ReactNode;
+interface ModalProps extends Omit<ReactModal.Props, 'children'> {
+  children?: React.ReactNode;
   contentClassName?: string;
   title?: string;
 }
 
-export function Modal(props: ModalProps): React.JSX.Element {
+export function Modal(props: Readonly<ModalProps>): React.JSX.Element {
   const { children, contentClassName, title } = props;
 
   const customStyles = {
@@ -37,15 +37,17 @@ export function Modal(props: ModalProps): React.JSX.Element {
       closeTimeoutMS={200}
       ariaHideApp={false}
       style={customStyles}
-      {...props}
       shouldCloseOnEsc={true}
       shouldCloseOnOverlayClick={true}
+      {...props}
     >
-      <Header>
-        <P14 className='font-semibold'>{title}</P14>
-        <CloseIcon onClick={props.onRequestClose} />
-      </Header>
-      <ModalContainer className={contentClassName}>{children}</ModalContainer>
+      <>
+        <Header>
+          <P14 className='font-semibold'>{title}</P14>
+          <CloseIcon onClick={props.onRequestClose} />
+        </Header>
+        <ModalContainer className={contentClassName}>{children}</ModalContainer>
+      </>
     </ReactModal>
   );
 }

@@ -240,39 +240,40 @@ export function DetailUserPage(props: DetailUserPageProps): React.JSX.Element {
             </InfosDetailPage>
             <TitleDetailPage>{t('users.detail.actions')}</TitleDetailPage>
             <InfosDetailPage className='border-red-300'>
-              {user.role !== UserRoleEnum.CHILD && (
-                <RowInfosDetailPage>
-                  <Col className='w-1/2'>
-                    <LabelRowInfosDetailPage>
-                      {t('users.detail.changeAdminStatus.label')}
-                    </LabelRowInfosDetailPage>
-                    <ValueRowInfosDetailPage className='mt-1'>
-                      {user.isAdmin
-                        ? t('users.detail.changeAdminStatus.ifRemove')
-                        : t('users.detail.changeAdminStatus.ifAdd')}
-                    </ValueRowInfosDetailPage>
-                  </Col>
-                  {user.isAdmin ? (
-                    <ButtonDeleteDetailPage
-                      isLoading={toggleAdminLoading}
-                      onClick={() => toggleAdmin()}
-                      outlined
-                      leftIcon={<MinusCircleIcon />}
-                    >
-                      {t('users.detail.changeAdminStatus.remove')}
-                    </ButtonDeleteDetailPage>
-                  ) : (
-                    <ButtonDeleteDetailPage
-                      isLoading={toggleAdminLoading}
-                      onClick={() => toggleAdmin()}
-                      outlined
-                      leftIcon={<PlusCircleIcon />}
-                    >
-                      {t('users.detail.changeAdminStatus.add')}
-                    </ButtonDeleteDetailPage>
-                  )}
-                </RowInfosDetailPage>
-              )}
+              {user.role !== UserRoleEnum.CHILD &&
+                currentUser?.id !== router.query.slug && (
+                  <RowInfosDetailPage>
+                    <Col className='w-1/2'>
+                      <LabelRowInfosDetailPage>
+                        {t('users.detail.changeAdminStatus.label')}
+                      </LabelRowInfosDetailPage>
+                      <ValueRowInfosDetailPage className='mt-1'>
+                        {user.isAdmin
+                          ? t('users.detail.changeAdminStatus.ifRemove')
+                          : t('users.detail.changeAdminStatus.ifAdd')}
+                      </ValueRowInfosDetailPage>
+                    </Col>
+                    {user.isAdmin ? (
+                      <ButtonDeleteDetailPage
+                        isLoading={toggleAdminLoading}
+                        onClick={() => toggleAdmin()}
+                        outlined
+                        leftIcon={<MinusCircleIcon />}
+                      >
+                        {t('users.detail.changeAdminStatus.remove')}
+                      </ButtonDeleteDetailPage>
+                    ) : (
+                      <ButtonDeleteDetailPage
+                        isLoading={toggleAdminLoading}
+                        onClick={() => toggleAdmin()}
+                        outlined
+                        leftIcon={<PlusCircleIcon />}
+                      >
+                        {t('users.detail.changeAdminStatus.add')}
+                      </ButtonDeleteDetailPage>
+                    )}
+                  </RowInfosDetailPage>
+                )}
               {currentUser?.id === router.query.slug && (
                 <RowInfosDetailPage>
                   <Col className='w-1/2'>

@@ -1,5 +1,5 @@
 import { errorMessage } from '@/errors';
-import { CreateHouseApi, UpdateHouseApi } from 'src/types';
+import { BillingPlanTypeEnum, CreateHouseApi, UpdateHouseApi } from '@/types';
 import * as yup from 'yup';
 
 const create: yup.ObjectSchema<CreateHouseApi> = yup.object({
@@ -15,14 +15,22 @@ const update: yup.ObjectSchema<UpdateHouseApi> = yup.object({
     .min(1, errorMessage.fields('name').REQUIRED)
     .optional()
     .default(undefined),
-  animalIds: yup
-    .array()
-    .of(yup.string().typeError(errorMessage.fields('animalIds').NOT_STRING))
-    .optional()
-    .default(undefined),
   userIds: yup
     .array()
-    .of(yup.string().typeError(errorMessage.fields('userIds').NOT_STRING))
+    .min(1, errorMessage.fields('userIds').REQUIRED)
+    .optional()
+    .default(undefined),
+  animalIds: yup
+    .array()
+    .min(1, errorMessage.fields('animalIds').REQUIRED)
+    .optional()
+    .default(undefined),
+  billingPlan: yup
+    .string<BillingPlanTypeEnum>()
+    .oneOf(
+      Object.values(BillingPlanTypeEnum),
+      errorMessage.fields('billingPlan').NOT_VALID
+    )
     .optional()
     .default(undefined),
 });

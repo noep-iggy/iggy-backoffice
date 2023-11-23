@@ -1,10 +1,11 @@
 import { errorMessage } from '@/errors';
+
 import {
   CreateTaskApi,
   TaskRecurrenceEnum,
   TaskStatusEnum,
   UpdateTaskApi,
-} from 'src/types';
+} from '@/types';
 import * as yup from 'yup';
 import { recurrenceValidation } from './recurrence';
 
@@ -23,19 +24,13 @@ const create: yup.ObjectSchema<CreateTaskApi> = yup.object({
     .date()
     .required(errorMessage.fields('date').REQUIRED)
     .typeError(errorMessage.fields('date').NOT_VALID),
-  userIds: yup
-    .array()
-    .of(yup.string())
-    .required(errorMessage.fields('userIds').REQUIRED),
-  animalIds: yup
-    .array()
-    .of(yup.string())
-    .required(errorMessage.fields('animalIds').REQUIRED),
+  userIds: yup.array().required(errorMessage.fields('userIds').REQUIRED),
+  animalIds: yup.array().required(errorMessage.fields('animalIds').REQUIRED),
   recurrence: yup
     .mixed<TaskRecurrenceEnum>()
     .oneOf(
       Object.values(TaskRecurrenceEnum),
-      errorMessage.fields('type').NOT_VALID,
+      errorMessage.fields('type').NOT_VALID
     )
     .optional()
     .default(undefined),
@@ -58,7 +53,7 @@ const update: yup.ObjectSchema<UpdateTaskApi> = yup.object({
     .mixed<TaskStatusEnum>()
     .oneOf(
       Object.values(TaskStatusEnum),
-      errorMessage.fields('status').NOT_VALID,
+      errorMessage.fields('status').NOT_VALID
     )
     .optional()
     .default(undefined)
@@ -78,13 +73,11 @@ const update: yup.ObjectSchema<UpdateTaskApi> = yup.object({
     .typeError(errorMessage.fields('date').NOT_STRING),
   userIds: yup
     .array()
-    .of(yup.string())
     .min(1, errorMessage.fields('userIds').REQUIRED)
     .optional()
     .default(undefined),
   animalIds: yup
     .array()
-    .of(yup.string())
     .min(1, errorMessage.fields('animalIds').REQUIRED)
     .optional()
     .default(undefined),

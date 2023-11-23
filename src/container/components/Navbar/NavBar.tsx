@@ -12,7 +12,6 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/dist/client/router';
 import React from 'react';
 import tw from 'tailwind-styled-components';
-
 interface NavBarProps {
   className?: string;
   selected?: string;

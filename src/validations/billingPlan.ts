@@ -3,7 +3,8 @@ import {
   BillingPlanTypeEnum,
   CreateBillingPlanApi,
   UpdateBillingPlanApi,
-} from 'src/types';
+} from '@/types';
+
 import * as yup from 'yup';
 
 const create: yup.ObjectSchema<CreateBillingPlanApi> = yup.object({
@@ -24,7 +25,7 @@ const create: yup.ObjectSchema<CreateBillingPlanApi> = yup.object({
     .string<BillingPlanTypeEnum>()
     .oneOf(
       Object.values(BillingPlanTypeEnum),
-      errorMessage.fields('type').NOT_VALID,
+      errorMessage.fields('type').NOT_VALID
     )
     .required(errorMessage.fields('type').REQUIRED),
 });
@@ -52,7 +53,7 @@ const update: yup.ObjectSchema<UpdateBillingPlanApi> = yup.object({
     .string<BillingPlanTypeEnum>()
     .oneOf(
       Object.values(BillingPlanTypeEnum),
-      errorMessage.fields('type').NOT_VALID,
+      errorMessage.fields('type').NOT_VALID
     )
     .optional()
     .default(undefined),

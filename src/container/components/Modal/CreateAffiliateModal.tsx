@@ -13,7 +13,7 @@ import {
   formatApiErrorMessage,
   formatValidationErrorMessage,
 } from '@/services/error';
-import { AnimalTypeEnum, CreateAffiliateApi } from '@/types';
+import { AnimalTypeEnum, CreateAffiliateApi, MediaDto } from '@/types';
 import { affiliateValidation } from '@/validations';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'next-i18next';
@@ -71,7 +71,7 @@ export function CreateAffiliateModal(
     >
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputImage
-          value={watch('image')}
+          value={watch('image') as unknown as MediaDto}
           label={t('fields.image.label')}
           error={errors.image?.message}
           placeholder={t('fields.image.placeholder')}

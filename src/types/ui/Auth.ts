@@ -1,5 +1,5 @@
-import { AuthRegisterApi } from '@web-template/types';
+import { RegisterApi } from '../api';
 
-export interface AuthRegisterUi extends AuthRegisterApi {
+export interface AuthRegisterUi extends RegisterApi {
   confirmPassword?: string;
 }

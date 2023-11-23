@@ -1,10 +1,12 @@
 import { errorMessage } from '@/errors';
 import {
   AnimalGenderEnum,
+  AnimalStatusEnum,
   AnimalTypeEnum,
   CreateAnimalApi,
   UpdateAnimalApi,
-} from 'src/types';
+} from '@/types';
+
 import * as yup from 'yup';
 
 const create: yup.ObjectSchema<CreateAnimalApi> = yup.object({
@@ -17,7 +19,7 @@ const create: yup.ObjectSchema<CreateAnimalApi> = yup.object({
     .mixed<AnimalGenderEnum>()
     .oneOf(
       Object.values(AnimalGenderEnum),
-      errorMessage.fields('gender').NOT_VALID,
+      errorMessage.fields('gender').NOT_VALID
     )
     .required(errorMessage.fields('gender').REQUIRED)
     .typeError(errorMessage.fields('gender').NOT_STRING),
@@ -45,7 +47,7 @@ const update: yup.ObjectSchema<UpdateAnimalApi> = yup.object({
     .mixed<AnimalGenderEnum>()
     .oneOf(
       Object.values(AnimalGenderEnum),
-      errorMessage.fields('gender').NOT_VALID,
+      errorMessage.fields('gender').NOT_VALID
     )
     .optional()
     .default(undefined)
@@ -56,6 +58,15 @@ const update: yup.ObjectSchema<UpdateAnimalApi> = yup.object({
     .optional()
     .default(undefined)
     .typeError(errorMessage.fields('type').NOT_STRING),
+  status: yup
+    .mixed<AnimalStatusEnum>()
+    .oneOf(
+      Object.values(AnimalStatusEnum),
+      errorMessage.fields('status').NOT_VALID
+    )
+    .optional()
+    .default(undefined)
+    .typeError(errorMessage.fields('status').NOT_STRING),
 });
 
 export const animalValidation = {

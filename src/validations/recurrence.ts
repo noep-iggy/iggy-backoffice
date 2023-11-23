@@ -3,7 +3,8 @@ import {
   CreateRecurrenceApi,
   TaskRecurrenceEnum,
   UpdateRecurrenceApi,
-} from 'src/types';
+} from '@/types';
+
 import * as yup from 'yup';
 
 const create: yup.ObjectSchema<CreateRecurrenceApi> = yup.object({
@@ -15,7 +16,7 @@ const create: yup.ObjectSchema<CreateRecurrenceApi> = yup.object({
     .string<TaskRecurrenceEnum>()
     .oneOf(
       Object.values(TaskRecurrenceEnum),
-      errorMessage.fields('type').NOT_VALID,
+      errorMessage.fields('type').NOT_VALID
     )
     .required(errorMessage.fields('type').REQUIRED),
 });
@@ -31,7 +32,7 @@ const update: yup.ObjectSchema<UpdateRecurrenceApi> = yup.object({
     .mixed<TaskRecurrenceEnum>()
     .oneOf(
       Object.values(TaskRecurrenceEnum),
-      errorMessage.fields('type').NOT_VALID,
+      errorMessage.fields('type').NOT_VALID
     )
     .optional()
     .default(undefined),
