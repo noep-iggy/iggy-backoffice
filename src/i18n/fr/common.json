@@ -461,7 +461,8 @@
         "notFound": "Utilisateur non trouvé",
         "exist": "L'utilisateur existe déjà",
         "notFoundOrWrongPassword": "Utilisateur non trouvé ou mot de passe incorrect",
-        "notUpdated": "L'utilisateur n'a pas été mis à jour"
+        "notUpdated": "L'utilisateur n'a pas été mis à jour",
+        "notAdmin": "L'utilisateur n'est pas administrateur"
       },
       "admin": {
         "notAdmin": "Vous n'êtes pas administrateur",
