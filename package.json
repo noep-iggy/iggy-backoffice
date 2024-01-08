@@ -1,5 +1,5 @@
 {
-  "name": "@web-template/web-app",
+  "name": "iggy-backoffice",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,6 @@
   "dependencies": {
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.1",
-    "@noe-p/react-buttons-components": "^2.7.9",
     "@preconstruct/next": "^4.0.0",
     "@tippyjs/react": "^4.2.6",
     "@types/node": "20.4.4",
