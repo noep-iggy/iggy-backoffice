@@ -37,7 +37,6 @@ export const API_ROUTES = {
     getTasksByHouseId: (houseId: string) => `/admin/houses/${houseId}/tasks`,
   },
   admin: {
-    createDefaultAdmin: '/admin/create-default-admin',
     toggleAdminStatus: (userId: string) =>
       `/admin/users/${userId}/toggle-admin-status`,
   },
