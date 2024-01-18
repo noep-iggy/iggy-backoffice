@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableHeaderItem,
   TableRow,
+  renderBoolean,
 } from '@/components';
 import { ROUTES } from '@/routing';
 import { ApiService } from '@/services/api';
@@ -54,7 +55,7 @@ export function ListTasksPage(): React.JSX.Element {
     fetchTasks();
   }, [orderBy, orderType, search, page, houseId]);
 
-  function handleSortPlace(by: keyof TaskDto) {
+  function handleSort(by: keyof TaskDto) {
     if (orderBy === by) {
       setOrderType(orderType === 'ASC' ? 'DESC' : 'ASC');
     } else {
@@ -89,7 +90,7 @@ export function ListTasksPage(): React.JSX.Element {
       <TableHeader className={`${nbColumns} mt-2`}>
         <TableHeaderItem
           $isFocus={orderBy === 'title'}
-          onClick={() => handleSortPlace('title')}
+          onClick={() => handleSort('title')}
         >
           {t('tasks.list.table.title')}
           <ArrowsUpDownStyled
@@ -99,7 +100,7 @@ export function ListTasksPage(): React.JSX.Element {
         </TableHeaderItem>
         <TableHeaderItem
           $isFocus={orderBy === 'users'}
-          onClick={() => handleSortPlace('users')}
+          onClick={() => handleSort('users')}
         >
           {t('tasks.list.table.users')}
           <ArrowsUpDownStyled
@@ -109,7 +110,7 @@ export function ListTasksPage(): React.JSX.Element {
         </TableHeaderItem>
         <TableHeaderItem
           $isFocus={orderBy === 'animals'}
-          onClick={() => handleSortPlace('animals')}
+          onClick={() => handleSort('animals')}
         >
           {t('tasks.list.table.animals')}
           <ArrowsUpDownStyled
@@ -119,7 +120,7 @@ export function ListTasksPage(): React.JSX.Element {
         </TableHeaderItem>
         <TableHeaderItem
           $isFocus={orderBy === 'recurrence'}
-          onClick={() => handleSortPlace('recurrence')}
+          onClick={() => handleSort('recurrence')}
         >
           {t('tasks.list.table.recurrence')}
           <ArrowsUpDownStyled
@@ -129,11 +130,21 @@ export function ListTasksPage(): React.JSX.Element {
         </TableHeaderItem>
         <TableHeaderItem
           $isFocus={orderBy === 'status'}
-          onClick={() => handleSortPlace('status')}
+          onClick={() => handleSort('status')}
         >
           {t('tasks.list.table.status')}
           <ArrowsUpDownStyled
             $isFocus={orderBy === 'status'}
+            $direction={orderType === 'ASC'}
+          />
+        </TableHeaderItem>
+        <TableHeaderItem
+          $isFocus={orderBy === 'isArchived'}
+          onClick={() => handleSort('isArchived')}
+        >
+          {t('users.list.table.archives')}
+          <ArrowsUpDownStyled
+            $isFocus={orderBy === 'isArchived'}
             $direction={orderType === 'ASC'}
           />
         </TableHeaderItem>
@@ -174,6 +185,12 @@ export function ListTasksPage(): React.JSX.Element {
               $isFocus={orderBy === 'status' || rowTableHover === task.id}
             >
               {t(`enums.status.${task.status}`)}
+            </Cellule>
+            <Cellule
+              className='justify-center'
+              $isFocus={orderBy === 'isArchived' || rowTableHover === task.id}
+            >
+              {renderBoolean(task.isArchived)}
             </Cellule>
           </TableRow>
         ))}

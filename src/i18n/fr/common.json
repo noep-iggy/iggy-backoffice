@@ -211,7 +211,8 @@
         "status": "Statut",
         "users": "Utilisateurs",
         "animals": "Animals",
-        "recurrence": "Récurrence"
+        "recurrence": "Récurrence",
+        "archived": "Archivé"
       }
     },
     "detail": {
