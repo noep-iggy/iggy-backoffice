@@ -64,7 +64,7 @@ export function ListTasksPage(): React.JSX.Element {
     setOrderBy(by);
   }
 
-  const nbColumns = 'grid-cols-5';
+  const nbColumns = 'grid-cols-6';
 
   return (
     <Layout selected={ROUTES.tasks.list}>
@@ -142,7 +142,7 @@ export function ListTasksPage(): React.JSX.Element {
           $isFocus={orderBy === 'isArchived'}
           onClick={() => handleSort('isArchived')}
         >
-          {t('users.list.table.archives')}
+          {t('users.list.table.archived')}
           <ArrowsUpDownStyled
             $isFocus={orderBy === 'isArchived'}
             $direction={orderType === 'ASC'}
