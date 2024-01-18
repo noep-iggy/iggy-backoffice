@@ -142,7 +142,7 @@ export function ListTasksPage(): React.JSX.Element {
           $isFocus={orderBy === 'isArchived'}
           onClick={() => handleSort('isArchived')}
         >
-          {t('users.list.table.archived')}
+          {t('tasks.list.table.archived')}
           <ArrowsUpDownStyled
             $isFocus={orderBy === 'isArchived'}
             $direction={orderType === 'ASC'}
