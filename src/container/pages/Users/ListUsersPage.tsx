@@ -14,6 +14,7 @@ import {
 } from '@/components';
 import { ROUTES } from '@/routing';
 import { ApiService } from '@/services/api';
+import { hiddenText } from '@/services/utils';
 import { UserDto } from '@/types';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
@@ -148,17 +149,17 @@ export function ListUsersPage(): React.JSX.Element {
               $isFocus={orderBy === 'firstName' || rowTableHover === user.id}
             >
               <AvatarUser user={user} className='mr-2' />
-              {user.firstName}
+              {hiddenText(user.firstName, rowTableHover === user.id)}
             </Cellule>
             <Cellule
               $isFocus={orderBy === 'lastName' || rowTableHover === user.id}
             >
-              {user.lastName}
+              {hiddenText(user.lastName, rowTableHover === user.id)}
             </Cellule>
             <Cellule
               $isFocus={orderBy === 'email' || rowTableHover === user.id}
             >
-              {user.email}
+              {hiddenText(user.email, rowTableHover === user.id)}
             </Cellule>
             <Cellule
               $isEnum
@@ -169,7 +170,7 @@ export function ListUsersPage(): React.JSX.Element {
             <Cellule
               $isFocus={orderBy === 'house' || rowTableHover === user.id}
             >
-              {user.house?.name}
+              {hiddenText(user.house?.name, rowTableHover === user.id)}
             </Cellule>
             <Cellule
               className='justify-center'

@@ -12,6 +12,7 @@ import {
 } from '@/components';
 import { ROUTES } from '@/routing';
 import { ApiService } from '@/services/api';
+import { hiddenText } from '@/services/utils';
 import { AnimalDto, HouseDto, UserDto } from '@/types';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
@@ -125,18 +126,24 @@ export function ListHousesPage(): React.JSX.Element {
             <Cellule
               $isFocus={orderBy === 'name' || rowTableHover === house.id}
             >
-              {house.name}
+              {hiddenText(house.name, rowTableHover === house.id)}
             </Cellule>
             <Cellule
               $isFocus={orderBy === 'users' || rowTableHover === house.id}
             >
-              {house.users?.map((user: UserDto) => user.firstName).join(', ')}
+              {house.users
+                ?.map((user: UserDto) =>
+                  hiddenText(user.firstName, rowTableHover === house.id)
+                )
+                .join(', ')}
             </Cellule>
             <Cellule
               $isFocus={orderBy === 'animals' || rowTableHover === house.id}
             >
               {house.animals
-                ?.map((animal: AnimalDto) => animal.name)
+                ?.map((animal: AnimalDto) =>
+                  hiddenText(animal.name, rowTableHover === house.id)
+                )
                 .join(', ')}
             </Cellule>
             <Cellule

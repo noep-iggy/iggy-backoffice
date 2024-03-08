@@ -44,6 +44,7 @@ const Page = tw.div`
   flex-col
   items-start
   justify-start
+  min-h-[calc(100vh-5rem)]
   z-0
   w-full
   mt-5

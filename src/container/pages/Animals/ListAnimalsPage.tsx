@@ -12,6 +12,7 @@ import {
 } from '@/components';
 import { ROUTES } from '@/routing';
 import { ApiService } from '@/services/api';
+import { hiddenText } from '@/services/utils';
 import { AnimalDto } from '@/types';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
@@ -125,12 +126,12 @@ export function ListAnimalsPage(): React.JSX.Element {
             <Cellule
               $isFocus={orderBy === 'name' || rowTableHover === animal.id}
             >
-              {animal.name}
+              {hiddenText(animal.name, rowTableHover === animal.id)}
             </Cellule>
             <Cellule
               $isFocus={orderBy === 'house' || rowTableHover === animal.id}
             >
-              {animal.house?.name}
+              {hiddenText(animal.house?.name, rowTableHover === animal.id)}
             </Cellule>
             <Cellule
               $isEnum

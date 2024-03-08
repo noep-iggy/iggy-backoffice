@@ -14,6 +14,7 @@ import {
 } from '@/components';
 import { ROUTES } from '@/routing';
 import { ApiService } from '@/services/api';
+import { hiddenText } from '@/services/utils';
 import { AnimalDto, TaskDto, UserDto } from '@/types';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'next-i18next';
@@ -162,17 +163,25 @@ export function ListTasksPage(): React.JSX.Element {
             <Cellule
               $isFocus={orderBy === 'title' || rowTableHover === task.id}
             >
-              {task.title}
+              {hiddenText(task.title, rowTableHover === task.id)}
             </Cellule>
             <Cellule
               $isFocus={orderBy === 'users' || rowTableHover === task.id}
             >
-              {task.users?.map((user: UserDto) => user.firstName).join(', ')}
+              {task.users
+                ?.map((user: UserDto) =>
+                  hiddenText(user.firstName, rowTableHover === task.id)
+                )
+                .join(', ')}
             </Cellule>
             <Cellule
               $isFocus={orderBy === 'animals' || rowTableHover === task.id}
             >
-              {task.animals?.map((animal: AnimalDto) => animal.name).join(', ')}
+              {task.animals
+                ?.map((animal: AnimalDto) =>
+                  hiddenText(animal.name, rowTableHover === task.id)
+                )
+                .join(', ')}
             </Cellule>
             <Cellule
               $isEnum
