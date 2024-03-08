@@ -76,7 +76,11 @@ class HTTPService {
       };
     }
 
-    headers = { ...headers, 'x-api-key': process.env.NEXT_PUBLIC_API_KEY };
+    headers = {
+      ...headers,
+      'x-api-key': process.env.NEXT_PUBLIC_API_KEY,
+      'Access-Control-Allow-Origin': '*',
+    };
     return axios.create({
       headers,
       baseURL: this.baseURL,
