@@ -7,7 +7,6 @@ export function formatDate(date: Date): string {
     minute: 'numeric',
   });
 }
-
 export function hiddenText(
   text?: string,
   isVisible?: boolean
@@ -19,19 +18,25 @@ export function hiddenText(
   let hiddenPart = '';
   let visiblePart = '';
   let atIndex = 0;
-  let firstCharCode = 0;
 
   switch (true) {
     case isEmail.test(text):
       atIndex = text.indexOf('@');
-      hiddenPart = text.substring(1, atIndex).replace(/[a-zA-Z0-9]/g, '*');
+      hiddenPart = text.substring(1, atIndex);
+      if (hiddenPart.length > 4) {
+        hiddenPart = hiddenPart.substring(0, 4);
+      }
+      hiddenPart = hiddenPart.replace(/[a-zA-Z0-9]/g, '*');
       visiblePart = text.charAt(0);
       return visiblePart + hiddenPart + text.substring(atIndex);
 
     case text.trim().length > 0:
-      firstCharCode = text.charCodeAt(0);
-      hiddenPart = text.substring(1).replace(/./g, '*');
-      visiblePart = String.fromCharCode(firstCharCode);
+      hiddenPart = text.substring(1);
+      if (hiddenPart.length > 4) {
+        hiddenPart = hiddenPart.substring(0, 4);
+      }
+      hiddenPart = hiddenPart.replace(/./g, '*');
+      visiblePart = text.charAt(0);
       return visiblePart + hiddenPart;
 
     default:
