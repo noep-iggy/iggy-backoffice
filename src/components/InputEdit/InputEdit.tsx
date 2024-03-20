@@ -40,7 +40,9 @@ export function InputEdit(props: InputEditProps): JSX.Element {
             $isOpen={isEllipsisOpen}
             $isEmpty={!defaultValue || defaultValue === ''}
           >
-            {defaultValue && defaultValue !== '' ? defaultValue : placeholder}
+            {defaultValue && defaultValue !== ''
+              ? defaultValue.toString().slice(0, 40)
+              : placeholder}
           </P2Edit>
           {defaultValue && defaultValue.toString()?.length > 130 && (
             <EditButton
