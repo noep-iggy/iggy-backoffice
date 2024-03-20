@@ -25,7 +25,6 @@ export function Layout(props: LayoutProps): React.JSX.Element {
 const Main = tw.div`
   flex
   flex-row
-  h-screen
   w-full
   justify-end
 `;
@@ -33,10 +32,11 @@ const Main = tw.div`
 const Content = tw.div`
   flex
   flex-col
+  h-full
   w-[calc(100vw-14rem)]
   mr-[1rem]
   mt-[1rem]
-
+  gap-10
 `;
 
 const Page = tw.div`
@@ -44,9 +44,9 @@ const Page = tw.div`
   flex-col
   items-start
   justify-start
-  min-h-[calc(100vh-5rem)]
   z-0
   w-full
-  mt-5
-  mb-5 md:mb-20
+  h-full
+  flex-1
+  pt-5
 `;
